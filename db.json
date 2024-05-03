@@ -5,5 +5,10 @@
         {"id":3, "nom":"test3", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
         {"id":4, "nom":"test4", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
         {"id":5, "nom":"test5", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05}
+    ],
+    
+    "Category" : [
+        {"id":1, "type":"Volontaires"},
+        {"id":2, "type":"Judiciaires"}
     ]
 }
