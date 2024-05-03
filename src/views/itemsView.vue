@@ -28,7 +28,7 @@ export default {
 				console.error(
 					"Erreur lors de la récupération des items: ",
 					error
-				); // Utilisez console.error pour les erreurs
+				); 
 			}
 		},
 	},
