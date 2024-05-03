@@ -2,7 +2,7 @@ import axios from 'axios'
 const API_URL = "http://localhost:3000/Category";
 
 class CategoryService {
-	async getItems() {
+	async getCategory() {
 		try {
 			// Envoi de la requête
 			const response = await axios.get(API_URL);
