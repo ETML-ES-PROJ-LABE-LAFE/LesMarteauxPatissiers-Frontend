@@ -1,4 +1,4 @@
-# todos-project-2024
+# lmp-frontend-auction
 
 ## Project setup
 ```
