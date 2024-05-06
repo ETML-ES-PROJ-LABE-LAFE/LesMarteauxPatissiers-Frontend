@@ -1,9 +1,8 @@
 <template>
     <div>
-      <p class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
+      <button class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
         {{ category }}
-      </p>
-      <p>oui</p>
+      </button>
     </div>
   </template>
   
