@@ -1,7 +1,15 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png" />
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <div class="hello-world-container">
+            <HelloWorld msg="Bienvenue sur Encherino" />
+        </div>
+        <div class="home-content">
+            <div class="content-wrapper">
+                <p class="subtitle">Découvrez notre plateforme d'enchères en ligne où vous pouvez trouver une large gamme de produits passionnants à des prix compétitifs. 
+                    Que vous soyez un amateur d'antiquités, un collectionneur ou simplement à la recherche de bonnes affaires, 
+                    Encherino est l'endroit idéal pour vous.</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -31,3 +39,19 @@ export default {
     },
 };
 </script>
+
+<style>
+.hello-world-container {
+    text-align: center; /* Centrage horizontal */
+}
+
+.home-content {
+    display: flex;
+    justify-content: center; /* Centrage horizontal */
+}
+
+.content-wrapper {
+    max-width: 800px; /* Largeur maximale du contenu */
+    width: 100%;
+}
+</style>
