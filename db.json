@@ -2,13 +2,18 @@
     "items" : [
         {"id":1, "nom":"test", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
         {"id":2, "nom":"test2", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
-        {"id":3, "nom":"test3", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
-        {"id":4, "nom":"test4", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05},
-        {"id":5, "nom":"test5", "description":"Oui c'est beau", "fk_categorie":1, "val_initial":10.05, "val_max":1052.05}
+        {"id":3, "nom":"test3", "description":"Oui c'est beau", "fk_categorie":2, "val_initial":10.05, "val_max":1052.05},
+        {"id":4, "nom":"test4", "description":"Oui c'est beau", "fk_categorie":2, "val_initial":10.05, "val_max":1052.05},
+        {"id":5, "nom":"test5", "description":"Oui c'est beau", "fk_categorie":2, "val_initial":10.05, "val_max":1052.05}
     ],
     
     "Category" : [
         {"id":1, "type":"Volontaires"},
-        {"id":2, "type":"Judiciaires"}
+        {"id":2, "type":"Judiciaires"},
+        {"id":3, "type":"technologie"},
+        {"id":4, "type":"Sports"},
+        {"id":5, "type":"Automobiles "},
+        {"id":6, "type":""}
+
     ]
 }
