@@ -1,5 +1,6 @@
 <template>
 	<div class="home">
+		<CategoryButton v-bind:categories="categories" @category-selected="onCategorySelected"></CategoryButton>
 		<itemList v-bind:items="items"></itemList>
 	</div>
 </template>
@@ -8,15 +9,19 @@
 // @ is an alias to /src
 import itemList from "@/components/itemList.vue";
 import itemServices from "@/services/itemService.js";
+import CategoryButton from "@/components/CategoryButton.vue";
+import CategoryService from "@/services/CategoryService";
 
 export default {
 	name: "ItemView",
 	components: {
 		itemList,
+		CategoryButton,
 	},
 	data() {
 		return {
 			items: [],
+			categories: []
 		};
 	},
 	methods: {
@@ -31,9 +36,25 @@ export default {
 				); // Utilisez console.error pour les erreurs
 			}
 		},
+		async getCategory() {
+			try {
+				const categories = await CategoryService.getCategory(); 
+				this.categories = categories; 
+			} catch (error) {
+				console.error(
+					"Erreur lors de la récupération des items: ",
+					error
+				); 
+			}
+		},
+		onCategorySelected(category) {
+			console.log("Catégorie sélectionnée :", category);
+		},
 	},
 	created() {
 		this.getItems();
+		this.getCategory();
 	},
+	
 };
 </script>

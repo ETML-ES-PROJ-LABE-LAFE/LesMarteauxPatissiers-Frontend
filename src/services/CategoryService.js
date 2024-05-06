@@ -1,9 +1,8 @@
-import axios from "axios";
-const API_URL = "http://localhost:3000/items";
-//?category=
+import axios from 'axios'
+const API_URL = "http://localhost:8080/categories";
 
-class itemService {
-	async getItems() {
+class CategoryService {
+	async getCategory() {
 		try {
 			// Envoi de la requête
 			const response = await axios.get(API_URL);
@@ -20,4 +19,4 @@ class itemService {
 		}
 	}
 }
-export default new itemService();
+export default new CategoryService();
