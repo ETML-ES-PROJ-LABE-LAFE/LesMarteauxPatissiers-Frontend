@@ -1,8 +1,9 @@
 <template>
     <div>
-      <button class="category-button" v-for="category in categories" :key="category.id" @click="selectCategory(category.id)">
-        {{ category.type }}
-      </button>
+      <p class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
+        {{ category }}
+      </p>
+      <p>oui</p>
     </div>
   </template>
   
@@ -16,8 +17,8 @@
       }
     },
     methods: {
-      selectCategory(categoryId) {
-        this.$emit('category-selected', categoryId);
+      selectCategory(category) {
+        this.$emit('category-selected', category);
       }
     }
   };
