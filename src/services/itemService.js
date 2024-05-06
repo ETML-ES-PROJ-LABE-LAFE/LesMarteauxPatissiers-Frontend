@@ -1,6 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000/items";
-//?category=
+//const API_URL = "http://localhost:3000/items";
+const API_URL = "http://localhost:8080/items";
 
 class itemService {
 	async getItems() {
