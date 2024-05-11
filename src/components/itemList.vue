@@ -1,6 +1,7 @@
 <template>
 	<div class="container">
 		<h1 class="text-center">Lots</h1>
+		<p>Filtrer par : {{ categoryNameInFiltrer }}</p>
 		<table class="table table-striped">
 			<thead>
 				<th>Nom</th>
@@ -30,6 +31,7 @@ export default {
 			type: Array,
 			required: true,
 		},
+		categoryNameInFiltrer : String
 	},
 };
 </script>

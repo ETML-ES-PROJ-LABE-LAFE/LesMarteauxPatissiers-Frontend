@@ -1,7 +1,10 @@
 <template>
-    <div>
+    <div class="button-container">
       <button class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
         {{ category }}
+      </button>
+      <button class="category-button" @click="resetFilterItems()">
+        Reset
       </button>
     </div>
   </template>
@@ -18,12 +21,22 @@
     methods: {
       selectCategory(category) {
         this.$emit('category-selected', category);
+      },
+      resetFilterItems() {
+        this.$emit('reset-Filter-Items');
       }
     }
   };
   </script>
   
   <style scoped>
+.button-container {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    height: 10vh; /* Prendre toute la hauteur de la vue */
+  }
+
   .category-button {
     background-color: #4CAF50; /* Couleur de fond */
     color: white; /* Couleur du texte */
