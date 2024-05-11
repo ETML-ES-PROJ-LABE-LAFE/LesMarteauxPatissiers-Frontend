@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<CategoryButton v-bind:categories="categories" @category-selected="onCategorySelected"></CategoryButton>
+		<CategoryButton v-bind:categories="categories" @category-selected="onCategorySelected" @reset-Filter-Items="getItems"></CategoryButton>
 		<itemList v-bind:items="items"></itemList>
 	</div>
 </template>
@@ -47,8 +47,16 @@ export default {
 				); 
 			}
 		},
-		onCategorySelected(category) {
-			console.log("Catégorie sélectionnée :", category);
+		async onCategorySelected(category) {
+			try {
+				const items = await itemServices.getItemsByCategory(category); // Assurez-vous que la méthode est async et utilise await
+				this.items = items; // Stockez les données récupérées dans la data du composant
+			} catch (error) {
+				console.error(
+					"Erreur lors de la récupération des items: ",
+					error
+				); 
+			}
 		},
 	},
 	created() {

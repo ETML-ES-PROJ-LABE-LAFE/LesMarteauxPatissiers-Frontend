@@ -3,6 +3,9 @@
       <button class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
         {{ category }}
       </button>
+      <button class="category-button" @click="resetFilterItems()">
+        Reset
+      </button>
     </div>
   </template>
   
@@ -18,6 +21,9 @@
     methods: {
       selectCategory(category) {
         this.$emit('category-selected', category);
+      },
+      resetFilterItems() {
+        this.$emit('reset-Filter-Items');
       }
     }
   };
