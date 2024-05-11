@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
 		<CategoryButton v-bind:categories="categories" @category-selected="onCategorySelected" @reset-Filter-Items="getItems"></CategoryButton>
-		<itemList v-bind:items="items"></itemList>
+		<itemList v-bind:categoryNameInFiltrer="categoryNameInFiltrer" v-bind:items="items"></itemList>
 	</div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
 	data() {
 		return {
 			items: [],
-			categories: []
+			categories: [],
+			categoryNameInFiltrer: ""
 		};
 	},
 	methods: {
@@ -29,6 +30,7 @@ export default {
 			try {
 				const items = await itemServices.getItems(); // Assurez-vous que la méthode est async et utilise await
 				this.items = items; // Stockez les données récupérées dans la data du composant
+				this.categoryNameInFiltrer = ""
 			} catch (error) {
 				console.error(
 					"Erreur lors de la récupération des items: ",
@@ -51,6 +53,7 @@ export default {
 			try {
 				const items = await itemServices.getItemsByCategory(category); // Assurez-vous que la méthode est async et utilise await
 				this.items = items; // Stockez les données récupérées dans la data du composant
+				this.categoryNameInFiltrer = category
 			} catch (error) {
 				console.error(
 					"Erreur lors de la récupération des items: ",
