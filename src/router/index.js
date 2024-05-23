@@ -20,10 +20,19 @@ const routes = [
 		path: "/lots",
 		name: "lots",
 		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
+		// this generates a separate chunk (lots.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
 		component: () =>
-			import(/* webpackChunkName: "about" */ "../views/itemsView.vue"),
+			import(/* webpackChunkName: "lots" */ "../views/itemsView.vue"),
+	},
+	{
+		path: "/ajout-items",
+		name: "ajout-items",
+		// route level code-splitting
+		// this generates a separate chunk (ajout-items.[hash].js) for this route
+		// which is lazy-loaded when the route is visited.
+		component: () =>
+			import(/* webpackChunkName: "ajout-items" */ "../views/AjoutItems.vue"),
 	},
 ];
 
