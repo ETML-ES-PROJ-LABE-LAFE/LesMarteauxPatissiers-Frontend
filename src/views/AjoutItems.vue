@@ -8,16 +8,16 @@
         </div>
         <div class="form-group">
           <label for="category">Catégorie:</label>
-          <select id="category" v-model="category" required>
+          <select id="category" v-model="categoryId" required>
             <option disabled value="">Sélectionnez une catégorie</option>
-            <option v-for="cat in categories" :key="cat.id" :value="cat.name">{{ cat.name }}</option>
+            <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="subCategory">Sous-Catégorie:</label>
-          <select id="subCategory" v-model="subCategory" required>
+          <select id="subCategory" v-model="subCategoryId" required>
             <option disabled value="">Sélectionnez une sous-catégorie</option>
-            <option v-for="subCat in subCategories" :key="subCat.id" :value="subCat.name">{{ subCat.name }}</option>
+            <option v-for="subCat in subCategories" :key="subCat.id" :value="subCat.id">{{ subCat.name }}</option>
           </select>
         </div>
         <div class="form-group">
@@ -44,8 +44,8 @@
     data() {
       return {
         name: '',
-        category: '',
-        subCategory: '',
+        categoryId: '',
+        subCategoryId: '',
         description: '',
         initialPrice: 0,
         categories: [],
@@ -56,15 +56,19 @@
       async addItem() {
         const newItem = {
           name: this.name,
-          category: this.category,
-          subCategory: this.subCategory,
+          category: { id: this.categoryId },
+          subCategory: { id: this.subCategoryId },
           description: this.description,
           initialPrice: this.initialPrice
         };
   
+        console.log('Tentative d\'ajout de l\'item:', newItem); // Debug: log de l'item à ajouter
+  
         try {
           await itemService.addItem(newItem);
-          this.$router.push('/'); // Rediriger vers la page d'accueil après l'ajout
+          console.log('Item ajouté avec succès'); // Debug: confirmation d'ajout
+          this.showSuccessAlert();
+          this.$router.push('/');
         } catch (error) {
           console.error('Erreur lors de l\'ajout de l\'item:', error);
         }
@@ -76,11 +80,14 @@
         } catch (error) {
           console.error('Erreur lors de la récupération des catégories:', error);
         }
+      },
+      showSuccessAlert() {
+        alert("L'item a été ajouté avec succès!");
       }
     },
     watch: {
-      category(newCategory) {
-        const selectedCategory = this.categories.find(cat => cat.name === newCategory);
+      categoryId(newCategoryId) {
+        const selectedCategory = this.categories.find(cat => cat.id === newCategoryId);
         this.subCategories = selectedCategory ? selectedCategory.subCategories : [];
       }
     },

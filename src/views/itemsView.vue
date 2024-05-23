@@ -1,12 +1,21 @@
 <template>
   <div class="home">
     <div class="categories">
-      <div v-for="category in categories" :key="category.id" class="category">
+      <div
+        v-for="category in categories"
+        :key="category.id"
+        class="category"
+        v-show="activeCategory === null || activeCategory === category.id"
+      >
         <button @click="toggleSubCategories(category.id)" class="btn btn-category">
           {{ category.name }}
         </button>
         <div v-if="category.id === activeCategory" class="subcategories">
-          <button v-for="subCategory in category.subCategories" :key="subCategory.id" class="btn btn-subcategory">
+          <button
+            v-for="subCategory in category.subCategories"
+            :key="subCategory.id"
+            class="btn btn-subcategory"
+          >
             {{ subCategory.name }}
           </button>
         </div>
@@ -42,21 +51,15 @@ export default {
         this.items = items; // Stockez les données récupérées dans la data du composant
         this.categoryNameInFiltrer = "";
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des items: ",
-          error
-        ); 
+        console.error("Erreur lors de la récupération des items: ", error);
       }
     },
     async getCategory() {
       try {
-        const categories = await CategoryService.getCategory(); 
-        this.categories = categories; 
+        const categories = await CategoryService.getCategory();
+        this.categories = categories;
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des catégories: ",
-          error
-        ); 
+        console.error("Erreur lors de la récupération des catégories: ", error);
       }
     },
     async onCategorySelected(category) {
@@ -65,15 +68,12 @@ export default {
         this.items = items; // Stockez les données récupérées dans la data du composant
         this.categoryNameInFiltrer = category;
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des items: ",
-          error
-        ); 
+        console.error("Erreur lors de la récupération des items: ", error);
       }
     },
     toggleSubCategories(categoryId) {
       this.activeCategory = this.activeCategory === categoryId ? null : categoryId;
-    }
+    },
   },
   created() {
     this.getItems();
