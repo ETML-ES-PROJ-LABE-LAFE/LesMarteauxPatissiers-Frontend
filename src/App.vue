@@ -13,7 +13,7 @@
         <router-link to="/" class="menu-item">Home</router-link>
         <router-link to="/about" class="menu-item">About</router-link>
         <router-link to="/lots" class="menu-item">Lots</router-link>
-        <router-link to="/ajout-items" class="menu-item">Ajout Items</router-link> <!-- Nouveau lien -->
+        <router-link to="/ajout-items" class="menu-item">Ajout de Lots</router-link> <!-- Nouveau lien -->
       </div>
     </div>
   </nav>

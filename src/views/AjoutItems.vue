@@ -1,6 +1,6 @@
 <template>
     <div class="ajout-items">
-      <h1>Ajout d'un nouvel item</h1>
+      <h1>Ajout d'un nouveau lot</h1>
       <form @submit.prevent="addItem">
         <div class="form-group">
           <label for="name">Nom:</label>
@@ -29,7 +29,7 @@
           <input type="number" id="initialPrice" v-model="initialPrice" required>
         </div>
         <div class="form-group">
-          <button type="submit">Ajouter l'item</button>
+          <button type="submit">Ajouter</button>
         </div>
       </form>
     </div>
@@ -93,15 +93,16 @@
   <style scoped>
   .ajout-items {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 50px auto 0; /* Ajout d'une marge en haut de 50px */
     padding: 20px;
-    background-color: #2c3e50;
-    color: white;
+    background-color: #333; /* Fond noir correspondant à la barre de menu */
+    color: #fff; /* Texte blanc */
     border-radius: 8px;
   }
   .ajout-items h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: #42b983; /* Vert pour le titre */
   }
   .form-group {
     margin-bottom: 20px;
@@ -109,6 +110,7 @@
   .form-group label {
     display: block;
     margin-bottom: 5px;
+    color: #42b983; /* Vert pour les labels */
   }
   .form-group input,
   .form-group select {
@@ -117,19 +119,21 @@
     box-sizing: border-box;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background-color: #444; /* Fond gris foncé pour les champs */
+    color: #fff; /* Texte blanc pour les champs */
   }
   .form-group button {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #2980b9;
-    color: white;
+    background-color: #42b983; /* Fond vert pour le bouton */
+    color: #000; /* Texte noir pour le bouton */
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   .form-group button:hover {
-    background-color: #3498db;
+    background-color: #36a572; /* Vert plus foncé au survol */
   }
   </style>
   
