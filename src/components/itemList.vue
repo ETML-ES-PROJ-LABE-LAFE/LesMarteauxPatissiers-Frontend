@@ -11,15 +11,20 @@
 				<th>Prix actuel</th>
 			</thead>
 			<tbody>
-				<tr v-for="item in items" v-bind:key="item.id">
+				<tr v-for="item in paginatedItems" v-bind:key="item.id">
 					<td>{{ item.name }}</td>
 					<td>{{ item.category }}</td>
 					<td>{{ item.description }}</td>
-					<td>{{ item.initial_price }}</td>
-					<td>{{ item.last_bid }}</td>
+					<td>{{ item.initialPrice }}</td>
+					<td>{{ item.lastBid }}</td>
 				</tr>
 			</tbody>
 		</table>
+		<div class="pagination">
+			<button :disabled="currentPage === 1" @click="prevPage">Previous</button>
+			<span>Page {{ currentPage }} of {{ totalPages }}</span>
+			<button :disabled="currentPage === totalPages" @click="nextPage">Next</button>
+		</div>
 	</div>
 </template>
 
@@ -31,8 +36,36 @@ export default {
 			type: Array,
 			required: true,
 		},
-		categoryNameInFiltrer : String
+		categoryNameInFiltrer: String
 	},
+	data() {
+		return {
+			currentPage: 1,
+			itemsPerPage: 50
+		};
+	},
+	computed: {
+		paginatedItems() {
+			const start = (this.currentPage - 1) * this.itemsPerPage;
+			const end = start + this.itemsPerPage;
+			return this.items.slice(start, end);
+		},
+		totalPages() {
+			return Math.ceil(this.items.length / this.itemsPerPage);
+		}
+	},
+	methods: {
+		nextPage() {
+			if (this.currentPage < this.totalPages) {
+				this.currentPage++;
+			}
+		},
+		prevPage() {
+			if (this.currentPage > 1) {
+				this.currentPage--;
+			}
+		}
+	}
 };
 </script>
 
@@ -51,5 +84,14 @@ li {
 }
 a {
 	color: #42b983;
+}
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+.pagination button {
+	margin: 0 10px;
 }
 </style>
