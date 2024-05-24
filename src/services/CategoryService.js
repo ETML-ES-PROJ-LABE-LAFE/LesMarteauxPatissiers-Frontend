@@ -37,6 +37,17 @@ class CategoryService {
 			);
 		}
 	}
+
+	async getCategoryById(categoryId) {
+		try {
+		const response = await axios.get(`${API_URL}/${categoryId}`);
+		return response.data;
+		} catch (error) {
+		throw new Error(
+			`Erreur HTTP ${error.response.status}: ${error.response.data}`
+		);
+		}
+	}
 }
 
 export default new CategoryService();
