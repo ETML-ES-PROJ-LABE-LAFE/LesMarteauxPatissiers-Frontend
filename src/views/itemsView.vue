@@ -9,7 +9,11 @@
       :subCategories="subCategories"
       @subcategory-selected="onSubCategorySelected"
     />
-    <itemList :categoryNameInFiltrer="categoryNameInFiltrer" :items="filteredItems"></itemList>
+    <itemList
+      :categoryNameInFiltrer="categoryNameInFiltrer"
+      :items="filteredItems"
+      @reset-pagination="resetPagination"
+    ></itemList>
   </div>
 </template>
 
@@ -40,8 +44,7 @@ export default {
   methods: {
     async getItems() {
       try {
-        const items = await itemServices.getItems(); 
-        this.items = items; 
+        const items = await itemServices.getItems();
         // permet d'ajouter le nom de la catégorie à la colonne catégorie
         const itemsWithCategoryNames = await Promise.all(items.map(async (item) => {
           const category = await CategoryService.getCategoryById(item.categoryId);
@@ -73,12 +76,17 @@ export default {
     onSubCategorySelected(subCategory) {
       this.filteredItems = this.items.filter(item => item.categoryId === subCategory.id);
       this.categoryNameInFiltrer = subCategory.name;
+      this.resetPagination();
     },
     resetItems() {
       this.activeCategory = null;
       this.subCategories = [];
       this.filteredItems = this.items; // Réinitialiser pour afficher tous les items
       this.categoryNameInFiltrer = "";
+      this.resetPagination();
+    },
+    resetPagination() {
+      this.$emit('reset-pagination');
     }
   },
   created() {
