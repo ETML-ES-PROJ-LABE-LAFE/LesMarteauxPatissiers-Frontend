@@ -48,6 +48,7 @@ export default {
       subCategoryId: 0,
       description: '',
       initialPrice: 0,
+      //lastBid:0,
       parentCategories: [],
       subCategories: []
     };
@@ -64,7 +65,8 @@ export default {
         name: this.name,
         categoryId: this.subCategoryId,
         description: this.description,
-        initialPrice: this.initialPrice
+        initialPrice: this.initialPrice,
+        lastBid: 0
       };
 
       try {
