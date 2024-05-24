@@ -1,4 +1,4 @@
-<template>
+<!--<template>
     <div class="button-container">
       <button class="category-button" v-for="(category, index) in categories" :key="index" @click="selectCategory(category)">
         {{ category }}
@@ -7,52 +7,111 @@
         Reset
       </button>
     </div>
-  </template>
+</template>
+-->
+<template>
+  <div>
+    <div class="categories">
+      <div
+        v-for="category in categories"
+        :key="category.id"
+        class="category"
+      >
+        <button @click="toggleSubCategories(category)" class="btn btn-category">
+          {{ category.name }}
+        </button>
+      </div>
+      <button class="btn btn-reset" @click="resetFilterItems">Reset</button>
+    </div>
+    <div class="subcategories" v-if="activeCategory && subCategories.length">
+      <div v-for="subCategory in subCategories" :key="subCategory.id">
+        <button
+          class="btn btn-subcategory"
+          @click="selectCategory(subCategory)"
+        >
+          {{ subCategory.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
   
-  <script>
-  export default {
+<script>
+
+export default {
     name: "CategoryButton",
     props: {
       categories: {
         type: Array,
-        required: true
+        required: false,
+        default: () => []
       }
     },
+    data() {
+      return {
+        activeCategory: null,
+      };
+    },
     methods: {
+      toggleSubCategories(category) {
+        this.$emit('category-clicked', category);
+      },
       selectCategory(category) {
         this.$emit('category-selected', category);
       },
       resetFilterItems() {
-        this.$emit('reset-Filter-Items');
+        this.$emit('reset-filter-items');
       }
     }
   };
-  </script>
+</script>
   
   <style scoped>
-.button-container {
+  .categories {
     display: flex;
-    justify-content: center; /* Centrer horizontalement */
-    align-items: center; /* Centrer verticalement */
-    height: 10vh; /* Prendre toute la hauteur de la vue */
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
   }
-
-  .category-button {
-    background-color: #4CAF50; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    border: none; /* Supprimer la bordure */
-    padding: 15px 32px; /* Espacement du texte à l'intérieur du bouton */
-    text-align: center; /* Alignement du texte */
-    text-decoration: none; /* Supprimer la décoration du texte */
-    display: inline-block; /* Afficher en tant que bloc */
-    font-size: 16px; /* Taille de la police */
-    margin: 4px 2px; /* Marge extérieure du bouton */
-    cursor: pointer; /* Curseur pointeur au survol */
-    border-radius: 12px; /* Bordures arrondies */
+  .category {
+    margin: 10px;
+    text-align: center;
   }
-  
-  .category-button:hover {
-    background-color: #45a049; /* Couleur de fond au survol */
+  .btn-category {
+    background-color: #42b983; /* Couleur de fond pour les boutons de catégorie */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 150px;
+    text-align: center;
+  }
+  .btn-category:hover {
+    background-color: #36a572; /* Couleur de fond au survol pour les boutons de catégorie */
+  }
+  .btn-subcategory {
+    background-color: #66cdaa; /* Couleur de fond plus clair pour les boutons de sous-catégorie */
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: center;
+    font-size: 0.9em; /* Taille de police plus petite pour les sous-catégories */
+  }
+  .btn-subcategory:hover {
+    background-color: #5bb298; /* Couleur de fond au survol pour les boutons de sous-catégorie */
+  }
+  .subcategories {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
   }
   </style>
   
