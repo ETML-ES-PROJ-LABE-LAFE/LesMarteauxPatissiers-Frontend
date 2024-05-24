@@ -16,6 +16,7 @@
         v-for="category in categories"
         :key="category.id"
         class="category"
+        v-show="!activeCategory || activeCategory === category.id"
       >
         <button @click="toggleSubCategories(category)" class="btn btn-category">
           {{ category.name }}
@@ -50,16 +51,25 @@ export default {
     data() {
       return {
         activeCategory: null,
+        subCategories: []
       };
     },
     methods: {
       toggleSubCategories(category) {
-        this.$emit('category-clicked', category);
+        if (this.activeCategory === category.id) {
+          this.activeCategory = null;
+          this.subCategories = [];
+        } else {
+          this.activeCategory = category.id;
+          this.$emit('category-clicked', category);
+        }
       },
       selectCategory(category) {
         this.$emit('category-selected', category);
       },
       resetFilterItems() {
+        this.activeCategory = null;
+        this.subCategories = [];
         this.$emit('reset-filter-items');
       }
     }

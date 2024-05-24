@@ -67,6 +67,11 @@ export default {
         console.error("Erreur lors de la récupération des items: ", error);
       }
     },
+    resetItems() {
+      this.activeCategory = null;
+      this.subCategories = [];
+      this.getItems();
+    }
   },
   created() {
     this.getItems();
