@@ -13,7 +13,7 @@
 			<tbody>
 				<tr v-for="item in paginatedItems" v-bind:key="item.id">
 					<td>{{ item.name }}</td>
-					<td>{{ item.category }}</td>
+					<td>{{ item.categoryName }}</td>
 					<td>{{ item.description }}</td>
 					<td>{{ item.initialPrice }}</td>
 					<td>{{ item.lastBid }}</td>
