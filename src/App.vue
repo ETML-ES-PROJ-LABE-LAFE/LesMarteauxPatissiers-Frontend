@@ -13,6 +13,7 @@
         <router-link to="/" class="menu-item">Home</router-link>
         <router-link to="/about" class="menu-item">About</router-link>
         <router-link to="/lots" class="menu-item">Lots</router-link>
+        <router-link to="/ajout-items" class="menu-item">Ajout de Lots</router-link> <!-- Nouveau lien -->
       </div>
     </div>
   </nav>
@@ -38,7 +39,6 @@ nav {
   color: #fff; /* Couleur du texte */
   margin-left: 10px; /* Ajout d'un espace entre le logo et le nom du site */
 }
-
 
 .left-section {
   display: flex; /* Affichage en ligne des éléments */
