@@ -17,6 +17,5 @@ List all dependencies and their version needed by the project as :
   - IDE used (Visual Studio Code, IntelliJ IDEA 2023.2 )
   - Package manager (npm)
   - OS supported (Win10)
-  - Virtualization (.Net, .JDK, .JRE)
     
 ### Configuration
