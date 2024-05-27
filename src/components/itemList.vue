@@ -4,6 +4,7 @@
     <p>Filtrer par : {{ categoryNameInFiltrer }}</p>
     <table class="table table-striped">
       <thead>
+        <th>Numéro</th>
         <th>Nom</th>
         <th>Catégorie</th>
         <th>Description</th>
@@ -12,6 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="item in paginatedItems" v-bind:key="item.id">
+          <td>{{ shortenReference(item.reference) }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.categoryName }}</td>
           <td>{{ item.description }}</td>
@@ -67,6 +69,9 @@ export default {
     },
     resetPagination() {
       this.currentPage = 1;
+    },
+    shortenReference(reference) {
+      return reference.substring(0, 8);
     }
   },
   watch: {
