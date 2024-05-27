@@ -1,24 +1,22 @@
 # lmp-frontend-auction
 
-## Project setup
-```
-npm install
-```
+## Description
+This project is designed to develop a web-based auction application. The main features of this application include:
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Key Features:
+  - List the auction items and their corresponding attributes
+  - Filter the auction items by category and subcategories
+  - Add a new auction item using an add form
+  - Paginate the auction item list, starting from 50 items
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Getting Started
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Prerequisites
+List all dependencies and their version needed by the project as :
+  - DataBase Engine (H2)
+  - IDE used (Visual Studio Code, IntelliJ IDEA 2023.2 )
+  - Package manager (npm)
+  - OS supported (Win10)
+  - Virtualization (.Net, .JDK, .JRE)
+    
+### Configuration
