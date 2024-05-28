@@ -32,7 +32,7 @@ const routes = [
 		// this generates a separate chunk (ajout-items.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
 		component: () =>
-			import(/* webpackChunkName: "ajout-items" */ "../views/AjoutItems.vue"),
+			import(/* webpackChunkName: "ajout-items" */ "../views/AddItemView.vue"),
 	},
 ];
 
