@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      itemsPerPage: 50
+      itemsPerPage: 15
     };
   },
   computed: {
