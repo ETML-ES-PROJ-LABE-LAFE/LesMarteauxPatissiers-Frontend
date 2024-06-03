@@ -65,6 +65,11 @@ We welcome contributions to improve this project! If you would like to contribut
 ```
 
 7. Open a Pull Request : Go to the original repository, click on "Pull Requests" and submit your changes for review.
+   
+#### API Endpoints
+ 
+If you run the applicationy, you can use swagger to check API Endpoints on the link [HERE](http://localhost:8080/swagger-ui.html)
+Otherwise you can see them [HERE](https://github.com/ETML-ES-PROJ-LABE-LAFE/LesMarteauxPatissiers-Backend/wiki/API-END-POINTS) to see the end points
 
 
 Please ensure your code adheres to our coding standards and includes appropriate tests.
