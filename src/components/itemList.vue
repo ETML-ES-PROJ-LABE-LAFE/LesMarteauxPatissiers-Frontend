@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      itemsPerPage: 15,
+      itemsPerPage: 8,
     };
   },
   computed: {

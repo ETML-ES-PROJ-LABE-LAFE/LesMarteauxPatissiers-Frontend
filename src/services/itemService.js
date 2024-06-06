@@ -2,7 +2,7 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/items";
 
 class itemService {
-  async getItems(page = 1, itemsPerPage = 15) {
+  async getItems(page = 1, itemsPerPage = 8) {
     try {
       // Envoi de la requête avec pagination
       const response = await axios.get(`${API_URL}?_page=${page}&_limit=${itemsPerPage}`);
