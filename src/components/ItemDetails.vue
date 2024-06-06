@@ -10,7 +10,6 @@
         </div>
         <div class="item-field">
           <strong>Numéro:</strong> {{ shortenReference(item.reference) }}
-          <strong>Catégorie:</strong> {{ item.categoryName }}
         </div>
         <div class="item-field">
           <strong>Prix initial:</strong> {{ item.initialPrice }}
