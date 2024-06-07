@@ -39,13 +39,13 @@ export default {
       subCategories: [],
       categoryNameInFiltrer: "",
       activeCategory: null,
+      activeSubCategory: null,
     };
   },
   methods: {
     async getItems() {
       try {
         const items = await itemServices.getItems();
-        // permet d'ajouter le nom de la catégorie à la colonne catégorie
         const itemsWithCategoryNames = await Promise.all(items.map(async (item) => {
           const category = await CategoryService.getCategoryById(item.categoryId);
           return { ...item, categoryName: category.name };
@@ -68,18 +68,27 @@ export default {
     async onCategoryClicked(category) {
       try {
         this.activeCategory = category.id;
-        this.subCategories = await CategoryService.getSubCategories(category.id);
+        const subCategories = await CategoryService.getSubCategories(category.id);
+        this.subCategories = subCategories;
+
+        const subCategoryIds = subCategories.map(subCat => subCat.id);
+        this.filteredItems = this.items.filter(item => subCategoryIds.includes(item.categoryId));
+
+        this.categoryNameInFiltrer = category.name;
+        this.resetPagination();
       } catch (error) {
         console.error("Erreur lors de la récupération des sous-catégories: ", error);
       }
     },
     onSubCategorySelected(subCategory) {
+      this.activeSubCategory = subCategory.id;
       this.filteredItems = this.items.filter(item => item.categoryId === subCategory.id);
       this.categoryNameInFiltrer = subCategory.name;
       this.resetPagination();
     },
     resetItems() {
       this.activeCategory = null;
+      this.activeSubCategory = null;
       this.subCategories = [];
       this.filteredItems = this.items; // Réinitialiser pour afficher tous les items
       this.categoryNameInFiltrer = "";
