@@ -4,10 +4,11 @@
       <option v-for="customer in customers" :key="customer.id" :value="customer.id">
         {{ customer.nom }} {{ customer.prenom }}
       </option>
+      <option :value="null">Disconnect</option>
     </select>
   </div>
 </template>
-
+ 
 <script>
 export default {
   name: "CustomerList",
@@ -23,13 +24,18 @@ export default {
   },
   methods: {
     updateCustomer(event) {
-      const selected = this.customers.find(customer => customer.id === +event.target.value);
-      this.$emit('update:selectedCustomer', selected);
+      const selectedId = event.target.value;
+      if (selectedId === "null") {
+        this.$emit('update:selectedCustomer', null);
+      } else {
+        const selected = this.customers.find(customer => customer.id === +selectedId);
+        this.$emit('update:selectedCustomer', selected);
+      }
     }
   }
 };
 </script>
-
+ 
 <style scoped>
 .custom-select {
   padding: 10px;
@@ -41,7 +47,7 @@ export default {
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s; /* Transition pour effet de survol */
 }
-
+ 
 .custom-select:hover {
   background-color: #42b983; /* Couleur de fond au survol */
   color: #333; /* Couleur du texte au survol */
