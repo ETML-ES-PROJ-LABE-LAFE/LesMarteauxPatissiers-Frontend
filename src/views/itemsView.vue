@@ -13,7 +13,7 @@
       :categoryNameInFiltrer="categoryNameInFiltrer"
       :items="filteredItems"
       @reset-pagination="resetPagination"
-    ></itemList>
+    />
   </div>
 </template>
 
