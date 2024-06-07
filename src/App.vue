@@ -24,11 +24,11 @@
     <router-view />
   </div>
 </template>
-
+ 
 <script>
 import CustomerList from "@/components/CustomerList.vue";
 import CustomerService from "@/services/CustomerService.js";
-
+ 
 export default {
   name: "App",
   components: {
@@ -43,13 +43,27 @@ export default {
   async created() {
     try {
       this.customers = await CustomerService.getCustomer();
+      const storedCustomer = localStorage.getItem('customer');
+      if (storedCustomer) {
+        this.selectedCustomer = JSON.parse(storedCustomer);
+      }
     } catch (error) {
       console.error("Erreur lors de la récupération des clients:", error.message);
     }
   },
+  methods: {
+    updateSelectedCustomer(customer) {
+      this.selectedCustomer = customer;
+      if (customer) {
+        localStorage.setItem('customer', JSON.stringify(customer));
+      } else {
+        localStorage.removeItem('customer');
+      }
+    }
+  }
 };
 </script>
-
+ 
 <style>
 nav {
   background-color: #333;
@@ -58,33 +72,33 @@ nav {
   justify-content: space-between;
   align-items: center;
 }
-
+ 
 .logo-img {
   height: 40px;
   width: auto;
 }
-
+ 
 .site-name {
   font-size: 24px;
   color: #fff;
   margin-left: 10px;
 }
-
+ 
 .left-section {
   display: flex;
   align-items: center;
 }
-
+ 
 .right-section {
   display: flex;
   align-items: center;
 }
-
+ 
 .menu {
   display: flex;
   align-items: center;
 }
-
+ 
 .menu-item {
   margin: 0 20px;
   font-size: 18px;
@@ -92,18 +106,18 @@ nav {
   text-decoration: none;
   transition: color 0.3s;
 }
-
+ 
 .menu-item:hover {
   color: #42b983;
 }
-
+ 
 .customer-dropdown {
   display: flex;
   align-items: center;
   margin-left: 20px; /* Ajouter un espace entre les liens du menu et la liste déroulante */
   margin-bottom: 20px;
 }
-
+ 
 .custom-select {
   padding: 5px 10px; /* Réduire le padding pour mieux aligner */
   font-size: 16px;
@@ -113,7 +127,7 @@ nav {
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
 }
-
+ 
 .custom-select:hover {
   background-color: #42b983;
   color: #333;
