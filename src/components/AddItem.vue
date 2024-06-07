@@ -34,8 +34,9 @@
         <span v-if="errors.initialPrice" class="error-message">{{ errors.initialPrice }}</span>
       </div>
       <div class="form-group">
-        <button type="submit">Ajouter</button>
+        <button type="submit" :disabled="!isCustomerConnected" class="action-button">Ajouter</button>
       </div>
+      <input type="hidden" v-model="localForm.appUserId">
     </form>
   </div>
 </template>
@@ -54,6 +55,10 @@ export default {
     },
     form: {
       type: Object,
+      required: true
+    },
+    isCustomerConnected: {
+      type: Boolean,
       required: true
     }
   },
@@ -77,7 +82,8 @@ export default {
         categoryId: this.localForm.subCategoryId,
         description: this.localForm.description,
         initialPrice: this.localForm.initialPrice,
-        lastBid: 0
+        appUserId: this.localForm.appUserId,
+        lastBid : 0
       };
 
       this.$emit('add-item', newItem);

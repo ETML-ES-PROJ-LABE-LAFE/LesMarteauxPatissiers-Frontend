@@ -1,20 +1,21 @@
 <template>
   <div>
-    <AddItemComponent 
-      :parentCategories="parentCategories" 
-      :subCategories="subCategories" 
+    <AddItemComponent
+      :parentCategories="parentCategories"
+      :subCategories="subCategories"
       :form="form"
+      :isCustomerConnected="isCustomerConnected"
       @add-item="addItem"
       @category-changed="fetchSubCategories"
     />
   </div>
 </template>
-
+ 
 <script>
 import AddItemComponent from '@/components/AddItem.vue';
 import itemService from '@/services/itemService.js';
 import categoryService from '@/services/CategoryService.js';
-
+ 
 export default {
   components: {
     AddItemComponent
@@ -29,12 +30,15 @@ export default {
         initialPrice: 0,
       },
       parentCategories: [],
-      subCategories: []
+      subCategories: [],
+      isCustomerConnected: false,
+      appUserId: null // Nouvelle variable pour stocker l'ID de l'utilisateur
     };
   },
   methods: {
     async addItem(newItem) {
       try {
+        newItem.appUserId = this.appUserId;
         await itemService.addItem(newItem);
         console.log('Item ajouté avec succès');
         this.showSuccessAlert();
@@ -62,10 +66,19 @@ export default {
     },
     showSuccessAlert() {
       alert("L'item a été ajouté avec succès!");
+    },
+    checkCustomerConnection() {
+      const customer = JSON.parse(localStorage.getItem('customer'));
+      if (customer && customer.id) {
+        this.appUserId = customer.id;
+        this.isCustomerConnected = true;
+      }
     }
   },
   created() {
     this.fetchParentCategories();
+    this.checkCustomerConnection();
+   
   }
 };
 </script>
