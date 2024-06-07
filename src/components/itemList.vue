@@ -2,18 +2,23 @@
   <div class="container">
     <h1 class="text-center">Lots</h1>
     <p>Filtrer par : {{ categoryNameInFiltrer }}</p>
-    <div class="items-list">
-      <ItemObj 
-        v-for="item in paginatedItems" 
-        :key="item.id" 
-        :item="item" 
-        @item-clicked="handleItemClicked" 
-      />
+    <div v-if="paginatedItems.length === 0" class="no-items-message">
+      Aucun lot à afficher.
     </div>
-    <div class="pagination">
-      <button :disabled="currentPage === 1" @click="prevPage" :class="{ disabled: currentPage === 1 }">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button :disabled="currentPage === totalPages" @click="nextPage" :class="{ disabled: currentPage === totalPages }">Next</button>
+    <div v-else>
+      <div class="items-list">
+        <ItemObj 
+          v-for="item in paginatedItems" 
+          :key="item.id" 
+          :item="item" 
+          @item-clicked="handleItemClicked" 
+        />
+      </div>
+      <div class="pagination">
+        <button :disabled="currentPage === 1" @click="prevPage" :class="{ disabled: currentPage === 1 }">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button :disabled="currentPage === totalPages" @click="nextPage" :class="{ disabled: currentPage === totalPages }">Next</button>
+      </div>
     </div>
   </div>
 </template>
@@ -80,6 +85,12 @@ export default {
 <style scoped>
 .container {
   padding: 20px;
+}
+.no-items-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #999;
+  margin-top: 20px;
 }
 .items-list {
   display: grid;
