@@ -3,16 +3,16 @@
     <h1 class="text-center">Détails de l'item</h1>
     <div v-if="loading" class="loading">Chargement...</div>
     <div v-else-if="item" class="item-container">
-      <ItemDetails :item="item" />
+      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" />
     </div>
     <div v-else class="error">Erreur lors du chargement de l'item.</div>
   </div>
 </template>
-
+ 
 <script>
 import itemService from '@/services/itemService';
 import ItemDetails from '@/components/ItemDetails.vue';
-
+ 
 export default {
   name: 'ItemDescriptionView',
   components: {
@@ -22,7 +22,8 @@ export default {
     return {
       item: null,
       loading: true,
-      error: null
+      error: null,
+      isCustomerConnected: false // Simuler l'état de connexion du customer
     };
   },
   methods: {
@@ -36,14 +37,18 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    checkCustomerConnection() {
+      this.isCustomerConnected = !!localStorage.getItem('customer');
     }
   },
   created() {
     this.fetchItem();
+    this.checkCustomerConnection();
   }
 };
 </script>
-
+ 
 <style scoped>
 .container {
   padding: 20px;
