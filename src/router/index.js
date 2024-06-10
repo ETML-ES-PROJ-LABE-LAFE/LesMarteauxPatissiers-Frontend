@@ -31,6 +31,23 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "item-description-view" */ "../views/ItemDescriptionView.vue"),
     props: true,
+  },{
+    path: "/my-proposed-lots",
+    name: "my-proposed-lots",
+    component: () =>
+      import(/* webpackChunkName: "my-proposed-lots" */ "../views/MyProposedLotsView.vue"),
+  },
+  {
+    path: "/my-bid-lots",
+    name: "my-bid-lots",
+    component: () =>
+      import(/* webpackChunkName: "my-bid-lots" */ "../views/MyBidLotsView.vue"),
+  },
+  {
+    path: "/my-won-lots",
+    name: "my-won-lots",
+    component: () =>
+      import(/* webpackChunkName: "my-bid-lots" */ "../views/MyWonLotsView.vue"),
   },
 ];
 

@@ -15,7 +15,17 @@
           <router-link to="/about" class="menu-item">About</router-link>
           <router-link to="/lots" class="menu-item">Lots</router-link>
           <router-link to="/ajout-items" class="menu-item">Ajout de Lots</router-link>
-          <div class="customer-dropdown ">
+          <div class="dropdown">
+            <button class="dropbtn">Mon Compte 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <router-link to="/my-proposed-lots" class="dropdown-item">Mes lots proposés</router-link>
+              <router-link to="/my-bid-lots" class="dropdown-item">Mes lots enchéris</router-link>
+              <router-link to="/my-won-lots" class="dropdown-item">Mes lots remportés</router-link>
+            </div>
+          </div>
+          <div class="customer-dropdown">
             <CustomerList :customers="customers" :selectedCustomer="selectedCustomer" @update:selectedCustomer="updateSelectedCustomer" />
           </div>
         </div>
@@ -24,11 +34,11 @@
     <router-view />
   </div>
 </template>
- 
+
 <script>
 import CustomerList from "@/components/CustomerList.vue";
 import CustomerService from "@/services/CustomerService.js";
- 
+
 export default {
   name: "App",
   components: {
@@ -63,7 +73,7 @@ export default {
   }
 };
 </script>
- 
+
 <style>
 nav {
   background-color: #333;
@@ -72,33 +82,33 @@ nav {
   justify-content: space-between;
   align-items: center;
 }
- 
+
 .logo-img {
   height: 40px;
   width: auto;
 }
- 
+
 .site-name {
   font-size: 24px;
   color: #fff;
   margin-left: 10px;
 }
- 
+
 .left-section {
   display: flex;
   align-items: center;
 }
- 
+
 .right-section {
   display: flex;
   align-items: center;
 }
- 
+
 .menu {
   display: flex;
   align-items: center;
 }
- 
+
 .menu-item {
   margin: 0 20px;
   font-size: 18px;
@@ -106,20 +116,62 @@ nav {
   text-decoration: none;
   transition: color 0.3s;
 }
- 
+
 .menu-item:hover {
   color: #42b983;
 }
- 
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #42b983;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content .dropdown-item {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+}
+
+.dropdown-content .dropdown-item:hover {
+  background-color: #42b983;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .customer-dropdown {
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Ajouter un espace entre les liens du menu et la liste déroulante */
-  margin-bottom: 20px;
+  margin-left: 20px;
 }
- 
+
 .custom-select {
-  padding: 5px 10px; /* Réduire le padding pour mieux aligner */
+  padding: 5px 10px;
   font-size: 16px;
   background-color: #333;
   color: #fff;
@@ -127,7 +179,7 @@ nav {
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
 }
- 
+
 .custom-select:hover {
   background-color: #42b983;
   color: #333;
