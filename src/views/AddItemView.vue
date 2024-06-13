@@ -14,7 +14,7 @@
 <script>
 import AddItem from '@/components/AddItem.vue';
 import { useToast } from 'vue-toastification';
-import itemService from '@/services/itemService.js';
+import ItemService from '@/services/ItemService.js';
 import AuctionsService from '@/services/AuctionsService.js';
 import categoryService from '@/services/CategoryService.js';
 
@@ -46,7 +46,7 @@ export default {
       const toast = useToast();
       try {
         newItem.appUserId = this.appUserId;
-        var data = await itemService.addItem(newItem);
+        var data = await ItemService.addItem(newItem);
         this.itemIdForm = data.id;
         this.auction.itemId = this.itemIdForm;
         await AuctionsService.addAuction(this.auction);
@@ -93,3 +93,4 @@ export default {
 <style scoped>
 
 </style>
+@/services/ItemService.js

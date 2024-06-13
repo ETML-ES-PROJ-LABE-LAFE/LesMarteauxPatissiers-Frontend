@@ -10,7 +10,7 @@
 </template>
  
 <script>
-import itemService from '@/services/itemService';
+import ItemService from '@/services/ItemService';
 import ItemDetails from '@/components/ItemDetails.vue';
  
 export default {
@@ -30,7 +30,7 @@ export default {
     async fetchItem() {
       const itemId = this.$route.params.id;
       try {
-        const response = await itemService.getItemById(itemId);
+        const response = await ItemService.getItemById(itemId);
         this.item = response;
       } catch (error) {
         this.error = error.message;
@@ -66,4 +66,4 @@ export default {
   color: red;
   font-size: 1.2em;
 }
-</style>
+</style>@/services/ItemService

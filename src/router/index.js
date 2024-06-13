@@ -17,7 +17,7 @@ const routes = [
     path: "/lots",
     name: "lots",
     component: () =>
-      import(/* webpackChunkName: "lots" */ "../views/itemsView.vue"),
+      import(/* webpackChunkName: "lots" */ "../views/ItemsView.vue"),
   },
   {
     path: "/ajout-items",

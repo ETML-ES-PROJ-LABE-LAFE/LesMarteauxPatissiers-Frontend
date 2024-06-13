@@ -9,7 +9,7 @@
       :subCategories="subCategories"
       @subcategory-selected="onSubCategorySelected"
     />
-    <itemList
+    <ItemList
       :categoryNameInFiltrer="categoryNameInFiltrer"
       :items="filteredItems"
       @reset-pagination="resetPagination"
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import itemList from "@/components/itemList.vue";
-import itemServices from "@/services/itemService.js";
+import ItemList from "@/components/ItemList.vue";
+import ItemServices from "@/services/ItemService.js";
 import CategoryButton from "@/components/CategoryButton.vue";
 import SubCategoryButton from "@/components/SubCategoryButton.vue";
 import CategoryService from "@/services/CategoryService";
@@ -28,7 +28,7 @@ import { useToast } from 'vue-toastification';
 export default {
   name: "ItemView",
   components: {
-    itemList,
+    ItemList,
     CategoryButton,
     SubCategoryButton,
   },
@@ -47,7 +47,7 @@ export default {
     async getItems() {
       const toast = useToast();
       try {
-        const items = await itemServices.getItems();
+        const items = await ItemServices.getItems();
         const itemsWithCategoryNames = await Promise.all(items.map(async (item) => {
           const category = await CategoryService.getCategoryById(item.categoryId);
           return { ...item, categoryName: category.name };
@@ -117,3 +117,4 @@ export default {
   padding: 20px;
 }
 </style>
+@/services/ItemService.js

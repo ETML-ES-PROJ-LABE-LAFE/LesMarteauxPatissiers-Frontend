@@ -1,7 +1,7 @@
 import axios from "axios";
 const API_URL = "http://localhost:8080/api/items";
 
-class itemService {
+class ItemService {
   async getItems(page = 1, itemsPerPage = 6) {
     try {
       // Envoi de la requête avec pagination
@@ -48,4 +48,4 @@ class itemService {
   }
 }
 
-export default new itemService();
+export default new ItemService();
