@@ -34,16 +34,17 @@
         <span v-if="errors.initialPrice" class="error-message">{{ errors.initialPrice }}</span>
       </div>
       <div class="form-group">
-        <button type="submit" :disabled="!isCustomerConnected" class="action-button">Ajouter</button>
+        <button type="submit" :disabled="!isCustomerConnected" class="action-button" :class="{ 'disabled-button': !isCustomerConnected }">Ajouter</button>
       </div>
       <input type="hidden" v-model="localForm.appUserId">
     </form>
   </div>
 </template>
 
+
 <script>
 export default {
-  name: 'AddItemComponent',
+  name: 'AddItem',
   props: {
     parentCategories: {
       type: Array,
@@ -155,8 +156,10 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
-.form-group button:hover {
-  background-color: #36a572;
+.action-button.disabled-button {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
 }
 .required {
   color: red;
@@ -170,3 +173,4 @@ export default {
   font-size: 0.875em;
 }
 </style>
+
