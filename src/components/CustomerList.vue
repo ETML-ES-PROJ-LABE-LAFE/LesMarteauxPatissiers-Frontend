@@ -2,7 +2,7 @@
   <div>
     <select v-if="customers.length" :value="selectedCustomer?.id" @change="updateCustomer" class="custom-select">
       <option v-for="customer in customers" :key="customer.id" :value="customer.id">
-        {{ customer.nom }} {{ customer.prenom }}
+        {{ customer.nom }} {{ customer.prenom }}  \_{[Solde : {{ customer.credit }}]}_/
       </option>
       <option :value="null">Disconnect</option>
     </select>

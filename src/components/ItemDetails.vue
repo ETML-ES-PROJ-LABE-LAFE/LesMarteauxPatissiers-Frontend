@@ -19,7 +19,7 @@
       <div class="item-field">
         <strong>Prix actuel:</strong> {{ item.lastBid }}
       </div>
-        <button :disabled="!isCustomerConnected" class="action-button">
+        <button :disabled="!isCustomerConnected" class="action-button" @click="$emit('open-bid-form')">
           {{ isCustomerConnected ? 'Miser' : 'Connectez-vous pour Miser' }}
         </button>
     </div>
