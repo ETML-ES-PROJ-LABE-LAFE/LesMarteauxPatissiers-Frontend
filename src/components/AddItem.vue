@@ -73,10 +73,11 @@ export default {
       this.errors = this.validateForm();
 
       if (Object.keys(this.errors).length > 0) {
-        console.error('Formulaire invalide', this.errors);
-        
-      }
-      else{  const newItem = {
+        this.notification = {
+          message: 'Formulaire invalide: ' + Object.values(this.errors).join(', '),
+          type: 'error'
+        };
+      }else{  const newItem = {
         name: this.localForm.name,
         categoryId: this.localForm.subCategoryId,
         description: this.localForm.description,
