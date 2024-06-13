@@ -3,7 +3,7 @@
     <h1 class="text-center">Détails de l'item</h1>
     <div v-if="loading" class="loading">Chargement...</div>
     <div v-else-if="item" class="item-container">
-      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" @open-bid-form="showBidForm = true" />
+      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" :lastBid="lastBid" @open-bid-form="showBidForm = true" />
     </div>
     <div v-else class="error">Erreur lors du chargement de l'item.</div>
 
@@ -31,7 +31,6 @@
 import ItemService from '@/services/ItemService';
 import ItemDetails from '@/components/ItemDetails.vue';
 import BidService from '@/services/BidService';
-//import AuctionsService from '@/services/AuctionsService.js';
 
 export default {
   name: 'ItemDescriptionView',
@@ -46,7 +45,8 @@ export default {
       isCustomerConnected: false,
       showBidForm: false,
       bidAmount: 0,
-      customerId: null // Ajouter pour stocker l'ID du client
+      customerId: null, // Ajouter pour stocker l'ID du client
+      lastBid: null
     };
   },
   methods: {
@@ -88,11 +88,13 @@ export default {
       try {
         const bidTime = new Date().toISOString(); // Obtenir la date/heure actuelle
 
-        //await AuctionsService.
+        const data = await ItemService.getAuctionByItemId(this.item.id);
+        console.log(" ---" + this.item.id )
+        console.log(" ---" + data.id )
         await BidService.addBid({
           itemId: this.item.id,
           appUserId: this.customerId,
-          auctionId: 3,
+          auctionId: data.id,
           amount: this.bidAmount,
           bidTime: bidTime
         });
