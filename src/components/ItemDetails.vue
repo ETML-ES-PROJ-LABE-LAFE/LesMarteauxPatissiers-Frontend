@@ -1,7 +1,6 @@
 <template>
   <div class="item-card">
     <div class="item-image">
-      <!-- Placeholder for image, you can replace this with an actual image tag if needed -->
       Image
     </div>
     <div class="item-details">
