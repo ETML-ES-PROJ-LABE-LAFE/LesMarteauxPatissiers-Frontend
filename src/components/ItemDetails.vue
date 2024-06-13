@@ -12,7 +12,7 @@
         <strong>Numéro:</strong> {{ shortenReference(item.reference) }}
       </div>
       <div class="item-field">
-        <strong>Prix initial:</strong> {{ item.initialPrice }}
+        <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
       </div>
       <div class="item-field item-description">
         <strong>Description:</strong> <span>{{ item.description }}</span>
@@ -44,6 +44,11 @@ export default {
     shortenReference(reference) {
       return reference.substring(0, 8);
     }
+  },
+  computed: {
+    getInitialPriceCHF(){
+      return this.item.initialPrice + " CHF";
+    },
   }
 };
 </script>

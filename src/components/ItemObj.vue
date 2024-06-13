@@ -9,7 +9,7 @@
         <strong>Catégorie:</strong> {{ item.categoryName }}
       </div>
       <div class="item-field">
-        <strong>Prix initial:</strong> {{ item.initialPrice }}
+        <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
       </div>
     </div>
     <div class="click-icon">
@@ -38,6 +38,14 @@ export default {
     },
     handleItemClick() {
       this.$emit('item-clicked', this.item.id);
+    }
+  },
+  computed: {
+    getInitialPriceCHF(){
+      return this.item.initialPrice + " CHF";
+    },
+    getAtualPriceCHF(){
+      return this.item.lastBid + " CHF";
     }
   }
 };
