@@ -92,7 +92,7 @@ export default {
         await BidService.addBid({
           itemId: this.item.id,
           appUserId: this.customerId,
-          auctionId: 1,
+          auctionId: 3,
           amount: this.bidAmount,
           bidTime: bidTime
         });
