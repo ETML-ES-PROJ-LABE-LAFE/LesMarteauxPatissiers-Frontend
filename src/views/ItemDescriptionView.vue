@@ -23,7 +23,7 @@ export default {
       item: null,
       loading: true,
       error: null,
-      isCustomerConnected: false // Simuler l'état de connexion du customer
+      isCustomerConnected: false 
     };
   },
   methods: {

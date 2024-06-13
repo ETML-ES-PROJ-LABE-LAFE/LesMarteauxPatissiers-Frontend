@@ -23,6 +23,7 @@ import itemServices from "@/services/itemService.js";
 import CategoryButton from "@/components/CategoryButton.vue";
 import SubCategoryButton from "@/components/SubCategoryButton.vue";
 import CategoryService from "@/services/CategoryService";
+import { useToast } from 'vue-toastification';
 
 export default {
   name: "ItemView",
@@ -44,6 +45,7 @@ export default {
   },
   methods: {
     async getItems() {
+      const toast = useToast();
       try {
         const items = await itemServices.getItems();
         const itemsWithCategoryNames = await Promise.all(items.map(async (item) => {
@@ -54,18 +56,20 @@ export default {
         this.filteredItems = itemsWithCategoryNames;
         this.categoryNameInFiltrer = "";
       } catch (error) {
-        console.error("Erreur lors de la récupération des items: ", error);
+        toast.error("Erreur lors de la récupération des items: " + error.message);
       }
     },
     async getCategory() {
+      const toast = useToast();
       try {
         const categories = await CategoryService.getParentCategories();
         this.categories = categories;
       } catch (error) {
-        console.error("Erreur lors de la récupération des catégories: ", error);
+        toast.error("Erreur lors de la récupération des catégories: " + error.message);
       }
     },
     async onCategoryClicked(category) {
+      const toast = useToast();
       try {
         this.activeCategory = category.id;
         const subCategories = await CategoryService.getSubCategories(category.id);
@@ -77,7 +81,7 @@ export default {
         this.categoryNameInFiltrer = category.name;
         this.resetPagination();
       } catch (error) {
-        console.error("Erreur lors de la récupération des sous-catégories: ", error);
+        toast.error("Erreur lors de la récupération des sous-catégories: " + error.message);
       }
     },
     onSubCategorySelected(subCategory) {
@@ -90,7 +94,7 @@ export default {
       this.activeCategory = null;
       this.activeSubCategory = null;
       this.subCategories = [];
-      this.filteredItems = this.items; // Réinitialiser pour afficher tous les items
+      this.filteredItems = this.items; 
       this.categoryNameInFiltrer = "";
       this.resetPagination();
     },
