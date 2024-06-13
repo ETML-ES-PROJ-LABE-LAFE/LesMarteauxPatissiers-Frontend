@@ -94,7 +94,7 @@ export default {
 }
 .items-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Deux éléments par ligne */
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 .pagination {

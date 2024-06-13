@@ -14,9 +14,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import itemService from "@/services/itemService.js";
+import ItemService from "@/services/ItemService.js";
 
 export default {
     name: "HomeView",
@@ -30,8 +29,7 @@ export default {
     },
     async created() {
         try {
-            // Recherche des tâches et remplissage du tableau todos
-            this.items = await itemService.get();
+            this.items = await ItemService.get();
             console.log(this.items);
         } catch (error) {
             console.log("Erreur " + error);
@@ -42,16 +40,17 @@ export default {
 
 <style>
 .hello-world-container {
-    text-align: center; /* Centrage horizontal */
+    text-align: center; 
 }
 
 .home-content {
     display: flex;
-    justify-content: center; /* Centrage horizontal */
+    justify-content: center; 
 }
 
 .content-wrapper {
-    max-width: 800px; /* Largeur maximale du contenu */
+    max-width: 800px; 
     width: 100%;
 }
 </style>
+@/services/ItemService.js

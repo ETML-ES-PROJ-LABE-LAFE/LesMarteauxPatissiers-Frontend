@@ -13,7 +13,8 @@
 
 <script>
 import AddItem from '@/components/AddItem.vue';
-import itemService from '@/services/itemService.js';
+import { useToast } from 'vue-toastification';
+import ItemService from '@/services/ItemService.js';
 import AuctionsService from '@/services/AuctionsService.js';
 import categoryService from '@/services/CategoryService.js';
 
@@ -36,46 +37,43 @@ export default {
       parentCategories: [],
       subCategories: [],
       isCustomerConnected: false,
-      appUserId: null, // Nouvelle variable pour stocker l'ID de l'utilisateur
+      appUserId: null, 
       itemIdForm: null
     };
   },
   methods: {
     async addItem(newItem) {
+      const toast = useToast();
       try {
         newItem.appUserId = this.appUserId;
-        var data = await itemService.addItem(newItem);
+        var data = await ItemService.addItem(newItem);
         this.itemIdForm = data.id;
-        //permet de renseigner l'item id à l'auction
         this.auction.itemId = this.itemIdForm;
-        var dataAuction = await AuctionsService.addAuction(this.auction);
-        console.log('Item ajouté avec succès ' + dataAuction.id);
-        console.log('Item ajouté avec succès');
-        this.showSuccessAlert();
+        await AuctionsService.addAuction(this.auction);
+        toast.success("L'item a été ajouté avec succès!");
         this.$router.push('/');
       } catch (error) {
-        console.error('Erreur lors de l\'ajout de l\'item:', error);
+        toast.error('Erreur lors de l\'ajout de l\'item: ' + error.message);
       }
     },
     async fetchParentCategories() {
+      const toast = useToast();
       try {
         const parentCategories = await categoryService.getParentCategories();
         this.parentCategories = parentCategories;
       } catch (error) {
-        console.error('Erreur lors de la récupération des catégories parentes:', error);
+        toast.error('Erreur lors de la récupération des catégories parentes: ' + error.message);
       }
     },
     async fetchSubCategories(categoryId) {
+      const toast = useToast();
       try {
         const subCategories = await categoryService.getSubCategories(categoryId);
         this.subCategories = subCategories;
       } catch (error) {
-        console.error('Erreur lors de la récupération des sous-catégories:', error);
+        toast.error('Erreur lors de la récupération des sous-catégories: ' + error.message);
         this.subCategories = [];
       }
-    },
-    showSuccessAlert() {
-      alert("L'item a été ajouté avec succès!");
     },
     checkCustomerConnection() {
       const customer = JSON.parse(localStorage.getItem('customer'));
@@ -88,7 +86,11 @@ export default {
   created() {
     this.fetchParentCategories();
     this.checkCustomerConnection();
-   
   }
 };
 </script>
+
+<style scoped>
+
+</style>
+@/services/ItemService.js
