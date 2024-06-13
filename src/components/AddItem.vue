@@ -74,10 +74,9 @@ export default {
 
       if (Object.keys(this.errors).length > 0) {
         console.error('Formulaire invalide', this.errors);
-        return;
+        
       }
-
-      const newItem = {
+      else{  const newItem = {
         name: this.localForm.name,
         categoryId: this.localForm.subCategoryId,
         description: this.localForm.description,
@@ -87,6 +86,8 @@ export default {
       };
 
       this.$emit('add-item', newItem);
+    }
+
     },
     handleCategoryChange() {
       this.$emit('category-changed', this.localForm.categoryId);
