@@ -26,7 +26,12 @@
             </div>
           </div>
           <div class="customer-dropdown">
-            <CustomerList :customers="customers" :selectedCustomer="selectedCustomer" @update:selectedCustomer="updateSelectedCustomer" />
+            <CustomerList 
+              :customers="customers" 
+              :selectedCustomer="selectedCustomer" 
+              @customerChanged="customerChanged"
+              @update:selectedCustomer="updateSelectedCustomer" 
+            />
           </div>
         </div>
       </div>
@@ -69,7 +74,10 @@ export default {
       } else {
         localStorage.removeItem('customer');
       }
-    }
+    },
+    customerChanged() {
+      this.$router.go(); // Recharge la page
+    },
   }
 };
 </script>

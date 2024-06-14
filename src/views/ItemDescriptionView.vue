@@ -83,6 +83,9 @@ export default {
     closeBidForm() {
       this.showBidForm = false;
     },
+    reloadPage() {
+      this.$router.go(0); // Recharger la page actuelle
+    },
     async placeBid() {
       const toast = useToast();
       if (this.bidAmount <= 0) {
@@ -104,6 +107,7 @@ export default {
         localStorage.setItem(`lastBid_${this.item.id}`, this.lastBid);
         toast.success('Votre mise a été placée avec succès.');
         this.closeBidForm();
+        setTimeout(this.reloadPage, 1600); // Recharge la page
       } catch (error) {
         toast.error('Erreur lors de la mise: ' + error.message);
       }

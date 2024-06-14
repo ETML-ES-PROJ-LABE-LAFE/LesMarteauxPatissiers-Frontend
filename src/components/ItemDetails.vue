@@ -17,7 +17,7 @@
         <strong>Description:</strong> <span>{{ item.description }}</span>
       </div>
       <div class="item-field">
-        <strong>Prix actuel:</strong> {{ getAtualPriceCHF  }}
+        <strong>Prix actuel:</strong> {{ getAtualPriceCHF }}
       </div>
         <button :disabled="!isCustomerConnected" class="action-button" @click="$emit('open-bid-form')">
           {{ isCustomerConnected ? 'Miser' : 'Connectez-vous pour Miser' }}
@@ -39,7 +39,7 @@ export default {
       required: true
     },
     lastBid: {
-      type: Number, // Utilisez Number à la place de Double
+      type: Number,
       required: true
     }
   },
@@ -49,10 +49,10 @@ export default {
     }
   },
   computed: {
-    getInitialPriceCHF(){
+    getInitialPriceCHF() {
       return this.item.initialPrice + " CHF";
     },
-    getAtualPriceCHF(){
+    getAtualPriceCHF() {
       return this.lastBid + " CHF";
     }
   }
@@ -91,21 +91,21 @@ export default {
   color: #333;
 }
 .action-button {
-padding: 10px 20px;
-background-color: #42b983;
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-transition: background-color 0.3s, color 0.3s;
-align-self: flex-start;
+  padding: 10px 20px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  align-self: flex-start;
 }
 .action-button:disabled {
-background-color: #ddd;
-color: #aaa;
-cursor: not-allowed;
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
 }
 .action-button:hover:not(:disabled) {
-background-color: #36a572;
+  background-color: #36a572;
 }
 </style>
