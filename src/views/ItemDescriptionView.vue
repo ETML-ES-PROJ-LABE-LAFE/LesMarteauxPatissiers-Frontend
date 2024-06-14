@@ -28,10 +28,11 @@
 </template>
 
 <script>
+import { useToast } from 'vue-toastification';
 import ItemService from '@/services/ItemService';
 import ItemDetails from '@/components/ItemDetails.vue';
 import BidService from '@/services/BidService';
-//import AuctionsService from '@/services/AuctionsService.js';
+
 
 export default {
   name: 'ItemDescriptionView',
@@ -46,7 +47,7 @@ export default {
       isCustomerConnected: false,
       showBidForm: false,
       bidAmount: 0,
-      customerId: null // Ajouter pour stocker l'ID du client
+      customerId: null 
     };
   },
   methods: {
@@ -81,14 +82,13 @@ export default {
       this.showBidForm = false;
     },
     async placeBid() {
+      const toast = useToast();
       if (this.bidAmount <= 0) {
-        alert('Le montant de la mise doit être supérieur à zéro.');
+        toast.error('Le montant de la mise doit être supérieur à zéro.');
         return;
       }
       try {
-        const bidTime = new Date().toISOString(); // Obtenir la date/heure actuelle
-
-        //await AuctionsService.
+        const bidTime = new Date().toISOString(); 
         await BidService.addBid({
           itemId: this.item.id,
           appUserId: this.customerId,
@@ -96,10 +96,10 @@ export default {
           amount: this.bidAmount,
           bidTime: bidTime
         });
-        alert('Votre mise a été placée avec succès.');
+        toast.success('Votre mise a été placée avec succès.');
         this.closeBidForm();
       } catch (error) {
-        alert('Erreur lors de la mise: ' + error.message);
+        toast.error('Erreur lors de la mise: ' + error.message);
       }
     }
   },
