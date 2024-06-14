@@ -43,9 +43,6 @@ export default {
   computed: {
     getInitialPriceCHF(){
       return this.item.initialPrice + " CHF";
-    },
-    getAtualPriceCHF(){
-      return this.item.lastBid + " CHF";
     }
   }
 };

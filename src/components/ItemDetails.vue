@@ -17,7 +17,7 @@
         <strong>Description:</strong> <span>{{ item.description }}</span>
       </div>
       <div class="item-field">
-        <strong>Prix actuel:</strong> {{ item.lastBid }}
+        <strong>Prix actuel:</strong> {{ getAtualPriceCHF  }}
       </div>
         <button :disabled="!isCustomerConnected" class="action-button" @click="$emit('open-bid-form')">
           {{ isCustomerConnected ? 'Miser' : 'Connectez-vous pour Miser' }}
@@ -37,6 +37,10 @@ export default {
     isCustomerConnected: {
       type: Boolean,
       required: true
+    },
+    lastBid: {
+      type: Number, // Utilisez Number à la place de Double
+      required: true
     }
   },
   methods: {
@@ -48,6 +52,9 @@ export default {
     getInitialPriceCHF(){
       return this.item.initialPrice + " CHF";
     },
+    getAtualPriceCHF(){
+      return this.lastBid + " CHF";
+    }
   }
 };
 </script>

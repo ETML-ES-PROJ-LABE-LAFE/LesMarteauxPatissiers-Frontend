@@ -5,7 +5,7 @@ class AuctionsService {
     
     async addAuction(auction) {
         try {
-            const response = await axios.post(API_URL, auction); // Utiliser POST au lieu de GET
+            const response = await axios.post(API_URL, auction);
             return response.data;
         } catch (error) {
             throw new Error(

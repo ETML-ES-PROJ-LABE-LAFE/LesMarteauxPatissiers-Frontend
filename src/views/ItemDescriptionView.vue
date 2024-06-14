@@ -3,7 +3,7 @@
     <h1 class="text-center">Détails de l'item</h1>
     <div v-if="loading" class="loading">Chargement...</div>
     <div v-else-if="item" class="item-container">
-      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" @open-bid-form="showBidForm = true" />
+      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" :lastBid="lastBid" @open-bid-form="showBidForm = true" />
     </div>
     <div v-else class="error">Erreur lors du chargement de l'item.</div>
 
@@ -33,7 +33,6 @@ import ItemService from '@/services/ItemService';
 import ItemDetails from '@/components/ItemDetails.vue';
 import BidService from '@/services/BidService';
 
-
 export default {
   name: 'ItemDescriptionView',
   components: {
@@ -47,7 +46,9 @@ export default {
       isCustomerConnected: false,
       showBidForm: false,
       bidAmount: 0,
-      customerId: null 
+      customerId: null,
+      lastBid: null,
+      auctionId: null
     };
   },
   methods: {
@@ -56,6 +57,7 @@ export default {
       try {
         const response = await ItemService.getItemById(itemId);
         this.item = response;
+        this.lastBid = localStorage.getItem(`lastBid_${itemId}`) || response.initialPrice;
       } catch (error) {
         this.error = error.message;
       } finally {
@@ -88,14 +90,18 @@ export default {
         return;
       }
       try {
-        const bidTime = new Date().toISOString(); 
-        await BidService.addBid({
+        const bidTime = new Date().toISOString(); // Obtenir la date/heure actuelle
+        const dataAuction = await ItemService.getAuctionByItemId(this.item.id);
+        const dataBid = await BidService.addBid({
           itemId: this.item.id,
           appUserId: this.customerId,
-          auctionId: 3,
+          auctionId: dataAuction.id,
           amount: this.bidAmount,
           bidTime: bidTime
         });
+        
+        this.lastBid = dataBid.amount;
+        localStorage.setItem(`lastBid_${this.item.id}`, this.lastBid);
         toast.success('Votre mise a été placée avec succès.');
         this.closeBidForm();
       } catch (error) {
@@ -141,9 +147,9 @@ export default {
 }
 .popup-card {
   background: white;
-  padding: 40px 50px; /* Augmenter la taille de la popup */
-  border-radius: 12px; /* Réduire l'arrondi des coins */
-  width: 600px; /* Augmenter la largeur */
+  padding: 40px 50px;
+  border-radius: 12px;
+  width: 600px;
   max-width: 90%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
