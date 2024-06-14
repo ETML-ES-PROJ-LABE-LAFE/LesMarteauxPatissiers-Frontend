@@ -4,19 +4,19 @@
       <h1>Mes lots enchéris</h1>
     </div>
     <div class="bid-lots-content">
-      <MySalesList :items="items"/>
+      <MyBidList :items="items"/>
     </div>
   </div>
 </template>
 
 <script>
-import MySalesList from '../components/MySalesList.vue'; // Assurez-vous que le chemin est correct
+import MyBidList from '../components/MyBidList.vue'; // Assurez-vous que le chemin est correct
 import CustomerService from '@/services/CustomerService.js'; // Importer le service
 
 export default {
   name: "MyBidLots",
   components: {
-    MySalesList
+    MyBidList
   },
   data() {
     return {
