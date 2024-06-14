@@ -14,5 +14,14 @@ class CustomerService {
 		}
 	}
 
+	async getUserSales(userId) {
+        try {
+            const response = await axios.get(`${API_URL}/${userId}/sales`);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
 }
 export default new CustomerService();
