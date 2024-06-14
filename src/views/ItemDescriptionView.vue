@@ -45,8 +45,9 @@ export default {
       isCustomerConnected: false,
       showBidForm: false,
       bidAmount: 0,
-      customerId: null, // Ajouter pour stocker l'ID du client
-      lastBid: null
+      customerId: null,
+      lastBid: null,
+      auctionId: null
     };
   },
   methods: {
@@ -55,6 +56,7 @@ export default {
       try {
         const response = await ItemService.getItemById(itemId);
         this.item = response;
+        this.lastBid = localStorage.getItem(`lastBid_${itemId}`) || response.initialPrice;
       } catch (error) {
         this.error = error.message;
       } finally {
@@ -88,16 +90,16 @@ export default {
       try {
         const bidTime = new Date().toISOString(); // Obtenir la date/heure actuelle
 
-        const data = await ItemService.getAuctionByItemId(this.item.id);
-        console.log(" ---" + this.item.id )
-        console.log(" ---" + data.id )
-        await BidService.addBid({
+        const dataAuction = await ItemService.getAuctionByItemId(this.item.id);
+        const dataBid = await BidService.addBid({
           itemId: this.item.id,
           appUserId: this.customerId,
-          auctionId: data.id,
+          auctionId: dataAuction.id,
           amount: this.bidAmount,
           bidTime: bidTime
         });
+        this.lastBid = dataBid.amount;
+        localStorage.setItem(`lastBid_${this.item.id}`, this.lastBid);
         alert('Votre mise a été placée avec succès.');
         this.closeBidForm();
       } catch (error) {
@@ -143,9 +145,9 @@ export default {
 }
 .popup-card {
   background: white;
-  padding: 40px 50px; /* Augmenter la taille de la popup */
-  border-radius: 12px; /* Réduire l'arrondi des coins */
-  width: 600px; /* Augmenter la largeur */
+  padding: 40px 50px;
+  border-radius: 12px;
+  width: 600px;
   max-width: 90%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
