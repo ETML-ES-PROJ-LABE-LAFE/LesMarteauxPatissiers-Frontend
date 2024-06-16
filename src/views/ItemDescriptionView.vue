@@ -3,7 +3,7 @@
     <h1 class="text-center">Détails de l'item</h1>
     <div v-if="loading" class="loading">Chargement...</div>
     <div v-else-if="item" class="item-container">
-      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" :lastBid="lastBid" @open-bid-form="showBidForm = true" />
+      <ItemDetails :item="item" :isCustomerConnected="isCustomerConnected" :lastBid="lastBid" :auctionExists="auctionExists" @open-bid-form="showBidForm = true" />
     </div>
     <div v-else class="error">Erreur lors du chargement de l'item.</div>
 
@@ -38,6 +38,7 @@ export default {
       showBidForm: false,
       customerId: null,
       lastBid: null,
+      auctionExists: true // Nouvelle propriété pour vérifier l'existence de l'enchère
     };
   },
   methods: {
@@ -47,6 +48,12 @@ export default {
         const response = await ItemService.getItemById(itemId);
         this.item = response;
         this.lastBid = localStorage.getItem(`lastBid_${itemId}`) || response.initialPrice;
+        
+        // Vérifier l'existence de l'enchère
+        const auction = await ItemService.getAuctionByItemId(itemId);
+        if (!auction) {
+          this.auctionExists = false;
+        }
       } catch (error) {
         this.error = error.message;
       } finally {

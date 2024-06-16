@@ -17,10 +17,14 @@
         <strong>Description:</strong> <span>{{ item.description }}</span>
       </div>
       <div class="item-field">
-        <strong>Prix actuel:</strong> {{ getAtualPriceCHF }}
+        <strong>Prix actuel:</strong> {{ getActualPriceCHF }}
       </div>
-        <button :disabled="!isCustomerConnected" class="action-button" @click="$emit('open-bid-form')">
-          {{ isCustomerConnected ? 'Miser' : 'Connectez-vous pour Miser' }}
+        <button :disabled="!isCustomerConnected || !auctionExists" class="action-button" @click="$emit('open-bid-form')">
+          <template v-if="isCustomerConnected">
+            <template v-if="auctionExists">Miser</template>
+            <template v-else>Il n'y a pas d'enchère actuellement</template>
+          </template>
+          <template v-else>Connectez-vous pour Miser</template>
         </button>
     </div>
   </div>
@@ -41,6 +45,10 @@ export default {
     lastBid: {
       type: Number,
       required: true
+    },
+    auctionExists: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
@@ -52,7 +60,7 @@ export default {
     getInitialPriceCHF() {
       return this.item.initialPrice + " CHF";
     },
-    getAtualPriceCHF() {
+    getActualPriceCHF() {
       return this.lastBid + " CHF";
     }
   }
