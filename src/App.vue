@@ -15,7 +15,7 @@
           <router-link to="/about" class="menu-item">About</router-link>
           <router-link to="/lots" class="menu-item">Lots</router-link>
           <router-link to="/ajout-items" class="menu-item">Ajout de Lots</router-link>
-          <div class="dropdown">
+          <div v-if="selectedCustomer" class="dropdown">
             <button class="dropbtn">Mon Compte 
               <i class="fa fa-caret-down"></i>
             </button>
