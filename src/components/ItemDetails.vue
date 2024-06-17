@@ -1,7 +1,8 @@
 <template>
   <div class="item-card">
     <div class="item-image">
-      Image
+      <img v-if="item.imageName && item.imageName !== ''" :src="item.imageName" alt="Image du lot" class="lot-image"/>
+      <template v-else>Image</template>
     </div>
     <div class="item-details">
       <div class="item-field">
@@ -19,13 +20,13 @@
       <div class="item-field">
         <strong>Prix actuel:</strong> {{ getActualPriceCHF }}
       </div>
-        <button :disabled="!isCustomerConnected || !auctionExists" class="action-button" @click="$emit('open-bid-form')">
-          <template v-if="isCustomerConnected">
-            <template v-if="auctionExists">Miser</template>
-            <template v-else>Il n'y a pas d'enchère actuellement</template>
-          </template>
-          <template v-else>Connectez-vous pour Miser</template>
-        </button>
+      <button :disabled="!isCustomerConnected || !auctionExists" class="action-button" @click="$emit('open-bid-form')">
+        <template v-if="isCustomerConnected">
+          <template v-if="auctionExists">Miser</template>
+          <template v-else>Il n'y a pas d'enchère actuellement</template>
+        </template>
+        <template v-else>Connectez-vous pour Miser</template>
+      </button>
     </div>
   </div>
 </template>
@@ -84,6 +85,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 8px;
+}
+.lot-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
   border-radius: 8px;
 }
 .item-details {
