@@ -43,12 +43,12 @@ export default {
   },
   computed: {
     paginatedItems() {
-      console.log('Items reçus par MyBidList:', this.items);
+      if (!Array.isArray(this.items)) {
+        return [];
+      }
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.items.slice(start, end).map(item => {
-        return { ...item, showImage: item.showImage || false };
-      });
+      return this.items.slice(start, end);
     },
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);

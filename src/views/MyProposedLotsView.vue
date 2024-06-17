@@ -55,6 +55,12 @@ export default {
         const auction = await ItemService.getAuctionByItemId(itemId);
         if (auction && auction.active) {
           await AuctionsService.endAuction(auction.id);
+          // Réinitialiser lastBid pour l'item terminé
+          const item = this.items.find(item => item.id === itemId);
+          if (item) {
+            localStorage.setItem(`lastBid_${itemId}`, item.initialPrice);
+            this.lastBid = item.initialPrice;
+          }
           this.fetchUserSales(); // Rafraîchir la liste après la fin de l'enchère
         } else {
           console.error('L\'enchère n\'est pas active ou n\'existe pas');
