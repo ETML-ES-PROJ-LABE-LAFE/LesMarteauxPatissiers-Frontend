@@ -13,6 +13,16 @@ class AuctionsService {
             );
         }
     }
+    async endAuction(id) {
+        try {
+            const response = await axios.put(`${API_URL}/${id}/desactivate`);
+            return response.data;
+        } catch (error) {
+            throw new Error(
+                `Erreur HTTP ${error.response.status}: ${error.response.data}`
+            );
+        }
+    }
 }
 
 export default new AuctionsService();

@@ -1,15 +1,24 @@
 <template>
-  <div class="item-card" @click="handleItemClick">
-    <div class="item-details">
+  <div class="item-card">
+    <div class="item-details" @click="handleItemClick">
       <div class="item-field">
         <strong>Numéro:</strong> {{ shortenReference(item.reference) }}
+      </div>
+      <div class="item-field">
         <strong>Nom:</strong> {{ item.name }}
-        <strong>Description:</strong> <span>{{ item.description }}</span>
-        <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
-        <strong>Prix actuel:</strong> {{ item.lastBid }}
+      </div>
+      <div class="item-field">
+        <strong>Description:</strong> <span class="description">{{ item.description }}</span>
+      </div>
+      <div class="item-field">
+        <strong>Prix initial:</strong> {{ initialPriceCHF }}
+      </div>
+      <div class="item-field">
+        <strong>Prix actuel:</strong> {{ actualPriceCHF }}
       </div>
     </div>
-    <div class="click-icon">
+    <button @click.stop="endAuction" class="end-auction-button">Terminer l'enchère</button>
+    <div class="click-icon" @click="handleItemClick">
       <font-awesome-icon icon="hand-pointer" />
     </div>
   </div>
@@ -22,12 +31,19 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    lastBid: {
+      type: Number,
+      required: true
     }
   },
-  data() {
-    return {
-      showDetails: false
-    };
+  computed: {
+    initialPriceCHF() {
+      return this.item.initialPrice + " CHF";
+    },
+    actualPriceCHF() {
+      return this.lastBid + " CHF";
+    }
   },
   methods: {
     shortenReference(reference) {
@@ -35,14 +51,9 @@ export default {
     },
     handleItemClick() {
       this.$emit('item-clicked', this.item.id);
-    }
-  },
-  computed: {
-    getInitialPriceCHF(){
-      return this.item.initialPrice + " CHF";
     },
-    getAtualPriceCHF(){
-      return this.item.lastBid + " CHF";
+    endAuction() {
+      this.$emit('end-auction', this.item.id);
     }
   }
 };
@@ -55,46 +66,41 @@ export default {
   padding: 16px;
   background-color: #f3f3f3;
   display: flex;
+  justify-content: space-between;
   gap: 24px;
   transition: transform 0.2s, border 0.2s, box-shadow 0.2s;
   cursor: pointer;
   position: relative;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  flex-wrap: wrap;
 }
 .item-card:hover {
   transform: scale(1.07);
   border: 3px solid #42b983;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.item-image {
-  width: 150px;
-  height: 150px;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-}
 .item-details {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 16px;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  cursor: pointer;
 }
 .item-field {
   display: flex;
-  gap: 16px;
+  gap: 8px;
 }
 .item-field strong {
   color: #333;
 }
-.item-description {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: baseline;
-}
-.item-description span {
-  margin-left: 4px;
+.description {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .click-icon {
   position: absolute;
@@ -102,5 +108,20 @@ export default {
   right: 16px;
   font-size: 24px;
   color: #42b983;
+  cursor: pointer;
+}
+.end-auction-button {
+  padding: 10px;
+  margin-left: auto;
+  margin-right: 35px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.end-auction-button:hover {
+  background-color: #ff1a1a;
 }
 </style>

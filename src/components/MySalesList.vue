@@ -8,8 +8,10 @@
         <MySales 
           v-for="item in paginatedItems" 
           :key="item.id" 
-          :item="item" 
-          @item-clicked="handleItemClicked" 
+          :item="item"
+          :lastBid="lastBid"
+          @item-clicked="handleItemClicked"
+          @end-auction="handleEndAuction" 
         />
       </div>
       <div class="pagination">
@@ -33,6 +35,10 @@ export default {
     items: {
       type: Array,
       required: true,
+    },
+    lastBid: {
+      type: Number,  // Utilisez un seul nombre pour stocker lastBid
+      required: true,
     }
   },
   data() {
@@ -43,12 +49,12 @@ export default {
   },
   computed: {
     paginatedItems() {
-      console.log('Items reçus par MySalesList:', this.items);
+      if (!Array.isArray(this.items)) {
+        return [];
+      }
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.items.slice(start, end).map(item => {
-        return { ...item, showImage: item.showImage || false };
-      });
+      return this.items.slice(start, end);
     },
     totalPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
@@ -70,6 +76,9 @@ export default {
     },
     handleItemClicked(itemId) {
       this.$router.push({ name: 'item-description-view', params: { id: itemId } });
+    },
+    handleEndAuction(itemId) {
+      this.$emit('end-auction', itemId);
     }
   },
   watch: {

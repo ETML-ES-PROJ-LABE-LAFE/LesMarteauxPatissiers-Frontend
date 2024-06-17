@@ -51,7 +51,7 @@ export default {
         
         // Vérifier l'existence de l'enchère
         const auction = await ItemService.getAuctionByItemId(itemId);
-        if (!auction) {
+        if (!auction || !auction.active) {
           this.auctionExists = false;
         }
       } catch (error) {
