@@ -4,14 +4,19 @@
       <h1>Mes lots proposés</h1>
     </div>
     <div class="proposed-lots-content">
-      <MySalesList :items="items"/>
+      <MySalesList 
+        :items="items" 
+        @end-auction="handleEndAuction" 
+      />
     </div>
   </div>
 </template>
 
 <script>
-import MySalesList from '../components/MySalesList.vue'; // Assurez-vous que le chemin est correct
-import CustomerService from '@/services/CustomerService.js'; // Importer le service
+import MySalesList from '../components/MySalesList.vue';
+import CustomerService from '@/services/CustomerService.js';
+import ItemService from '@/services/ItemService.js';
+import AuctionsService from '@/services/AuctionsService.js';
 
 export default {
   name: "MyProposedLots",
@@ -40,6 +45,19 @@ export default {
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des ventes de l’utilisateur:', error);
+      }
+    },
+    async handleEndAuction(itemId) {
+      try {
+        const auction = await ItemService.getAuctionByItemId(itemId);
+        if (auction && auction.active) {
+          await AuctionsService.endAuction(auction.id);
+          this.fetchUserSales(); // Rafraîchir la liste après la fin de l'enchère
+        } else {
+          console.error('L\'enchère n\'est pas active ou n\'existe pas');
+        }
+      } catch (error) {
+        console.error('Erreur lors de la fin de l\'enchère:', error);
       }
     },
     checkCustomerConnection() {
