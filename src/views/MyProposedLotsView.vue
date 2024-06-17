@@ -5,7 +5,8 @@
     </div>
     <div class="proposed-lots-content">
       <MySalesList 
-        :items="items" 
+        :items="items"
+        :lastBid="lastBid" 
         @end-auction="handleEndAuction" 
       />
     </div>
@@ -26,7 +27,8 @@ export default {
   data() {
     return {
       items: [],
-      customerId: null 
+      customerId: null,
+      lastBid: null  // Utilisez une seule variable pour stocker lastBid
     };
   },
   created() {
@@ -40,6 +42,7 @@ export default {
           const response = await CustomerService.getUserSales(this.customerId);
           console.log('Données reçues de l\'API:', response);
           this.items = response;
+          this.initializeLastBid();
         } else {
           console.error('Customer ID is not available');
         }
@@ -56,6 +59,7 @@ export default {
         } else {
           console.error('L\'enchère n\'est pas active ou n\'existe pas');
         }
+        this.reloadPage(); // Actualiser la page après la fin de l'enchère
       } catch (error) {
         console.error('Erreur lors de la fin de l\'enchère:', error);
       }
@@ -63,13 +67,28 @@ export default {
     checkCustomerConnection() {
       const customer = localStorage.getItem('customer');
       if (customer) {
-        console.log(customer + " MARCHE")
         const parsedCustomer = JSON.parse(customer);
         this.customerId = parsedCustomer.id;
-        console.log(parsedCustomer.id);
       } else {
         console.error('No customer found in localStorage');
       }
+    },
+    initializeLastBid() {
+      if (this.items && this.items.length > 0) {
+        this.items.forEach(item => {
+          const lastBid = localStorage.getItem(`lastBid_${item.id}`);
+          if (!lastBid) {
+            localStorage.setItem(`lastBid_${item.id}`, item.initialPrice);
+          } else {
+            this.lastBid = Number(lastBid);
+          }
+        });
+      } else {
+        this.lastBid = null; // Assurez-vous que lastBid est réinitialisé si items est vide
+      }
+    },
+    reloadPage() {
+      this.$router.go(0); // Recharger la page actuelle
     }
   },
 };

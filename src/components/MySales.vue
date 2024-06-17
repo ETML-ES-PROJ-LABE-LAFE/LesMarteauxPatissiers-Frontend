@@ -11,10 +11,10 @@
         <strong>Description:</strong> <span class="description">{{ item.description }}</span>
       </div>
       <div class="item-field">
-        <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
+        <strong>Prix initial:</strong> {{ initialPriceCHF }}
       </div>
       <div class="item-field">
-        <strong>Prix actuel:</strong> {{ getActualPriceCHF }}
+        <strong>Prix actuel:</strong> {{ actualPriceCHF }}
       </div>
     </div>
     <button @click.stop="endAuction" class="end-auction-button">Terminer l'enchère</button>
@@ -31,6 +31,18 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    lastBid: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    initialPriceCHF() {
+      return this.item.initialPrice + " CHF";
+    },
+    actualPriceCHF() {
+      return this.lastBid + " CHF";
     }
   },
   methods: {
@@ -42,14 +54,6 @@ export default {
     },
     endAuction() {
       this.$emit('end-auction', this.item.id);
-    }
-  },
-  computed: {
-    getInitialPriceCHF() {
-      return this.item.initialPrice + " CHF";
-    },
-    getActualPriceCHF() {
-      return this.item.lastBid + " CHF";
     }
   }
 };
@@ -68,8 +72,8 @@ export default {
   cursor: pointer;
   position: relative;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  align-items: center; /* Pour aligner verticalement les items */
-  flex-wrap: wrap; /* Pour gérer le débordement */
+  align-items: center;
+  flex-wrap: wrap;
 }
 .item-card:hover {
   transform: scale(1.07);
@@ -80,9 +84,9 @@ export default {
   display: flex;
   gap: 16px;
   flex: 1;
-  align-items: center; /* Pour aligner verticalement les items */
-  justify-content: flex-start; /* Alignement à gauche */
-  flex-wrap: wrap; /* Pour gérer le débordement */
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   cursor: pointer;
 }
 .item-field {
@@ -93,10 +97,10 @@ export default {
   color: #333;
 }
 .description {
-  max-width: 200px; /* Limite la largeur de la description */
-  white-space: nowrap; /* Empêche la description de s'étendre sur plusieurs lignes */
-  overflow: hidden; /* Masque le texte débordant */
-  text-overflow: ellipsis; /* Ajoute des points de suspension au texte débordant */
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .click-icon {
   position: absolute;
@@ -109,13 +113,13 @@ export default {
 .end-auction-button {
   padding: 10px;
   margin-left: auto;
-margin-right: 35px;
+  margin-right: 35px;
   background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  flex-shrink: 0; /* Pour éviter que le bouton rétrécisse */
+  flex-shrink: 0;
 }
 .end-auction-button:hover {
   background-color: #ff1a1a;

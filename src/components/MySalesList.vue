@@ -8,7 +8,8 @@
         <MySales 
           v-for="item in paginatedItems" 
           :key="item.id" 
-          :item="item" 
+          :item="item"
+          :lastBid="lastBid"
           @item-clicked="handleItemClicked"
           @end-auction="handleEndAuction" 
         />
@@ -33,6 +34,10 @@ export default {
   props: {
     items: {
       type: Array,
+      required: true,
+    },
+    lastBid: {
+      type: Number,  // Utilisez un seul nombre pour stocker lastBid
       required: true,
     }
   },
