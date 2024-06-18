@@ -9,7 +9,7 @@
           v-for="item in paginatedItems" 
           :key="item.id" 
           :item="item"
-          :lastBid="lastBid"
+          :lastBid="getLastBid(item.id)"
           @item-clicked="handleItemClicked"
           @end-auction="handleEndAuction" 
         />
@@ -36,10 +36,6 @@ export default {
       type: Array,
       required: true,
     },
-    lastBid: {
-      type: Number,  // Utilisez un seul nombre pour stocker lastBid
-      required: true,
-    }
   },
   data() {
     return {
@@ -61,6 +57,9 @@ export default {
     }
   },
   methods: {
+    getLastBid(itemId) {
+      return Number(localStorage.getItem(`lastBid_${itemId}`)) || 0;
+    },
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;

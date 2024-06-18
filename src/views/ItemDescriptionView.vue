@@ -47,13 +47,22 @@ export default {
       try {
         const response = await ItemService.getItemById(itemId);
         this.item = response;
-        this.lastBid = localStorage.getItem(`lastBid_${itemId}`) || response.initialPrice;
-        
+
         // Vérifier l'existence de l'enchère
         const auction = await ItemService.getAuctionByItemId(itemId);
         if (!auction || !auction.active) {
           this.auctionExists = false;
         }
+
+        // Initialiser lastBid à partir de localStorage ou utiliser initialPrice
+        const lastBidValue = localStorage.getItem(`lastBid_${itemId}`);
+        if (lastBidValue !== null) {
+          this.lastBid = Number(lastBidValue);
+        } else {
+          this.lastBid = response.initialPrice;
+        }
+
+        console.log("Last Bid Initial Value:", this.lastBid);
       } catch (error) {
         this.error = error.message;
       } finally {

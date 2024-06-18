@@ -49,6 +49,10 @@ export default {
         var data = await ItemService.addItem(newItem);
         this.itemIdForm = data.id;
         this.auction.itemId = this.itemIdForm;
+
+        // Initialiser lastBid à initialPrice
+        localStorage.setItem(`lastBid_${this.itemIdForm}`, newItem.initialPrice);
+
         await AuctionsService.addAuction(this.auction);
         toast.success("L'item a été ajouté avec succès!");
         this.$router.push('/');
