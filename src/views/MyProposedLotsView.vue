@@ -75,16 +75,6 @@ export default {
       } else {
         console.error('No customer found in localStorage');
       }
-    },
-    initializeLastBids() {
-      if (this.items && this.items.length > 0) {
-        this.items.forEach(item => {
-          const lastBid = localStorage.getItem(`lastBid_${item.id}`);
-          if (!lastBid) {
-            localStorage.setItem(`lastBid_${item.id}`, item.initialPrice);
-          }
-        });
-      }
     }
   },
 };
