@@ -9,6 +9,7 @@
           v-for="item in paginatedItems" 
           :key="item.id" 
           :item="item" 
+          :lastBid="getLastBid(item.id)" 
           @item-clicked="handleItemClicked" 
         />
       </div>
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      itemsPerPage: 6,
+      itemsPerPage: 6
     };
   },
   computed: {
@@ -70,6 +71,9 @@ export default {
     },
     handleItemClicked(itemId) {
       this.$router.push({ name: 'item-description-view', params: { id: itemId } });
+    },
+    getLastBid(itemId) {
+      return Number(localStorage.getItem(`lastBid_${itemId}`)) || 0;
     }
   },
   watch: {

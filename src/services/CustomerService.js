@@ -32,5 +32,22 @@ class CustomerService {
         }
     }
 
+    async getUserWon(userId) {
+        try {
+            const response = await axios.get(`${API_URL}/${userId}/won`);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+    async getUserSold(userId) {
+        try {
+            const response = await axios.get(`${API_URL}/${userId}/sold`);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
 }
 export default new CustomerService();

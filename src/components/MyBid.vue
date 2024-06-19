@@ -6,7 +6,7 @@
         <strong>Nom:</strong> {{ item.name }}
         <strong>Description:</strong> <span>{{ item.description }}</span>
         <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
-        <strong>Prix actuel:</strong> {{ item.lastBid }}
+        <strong>Prix actuel:</strong> {{ getActualPriceCHF }}
       </div>
     </div>
     <div class="click-icon">
@@ -22,12 +22,11 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+    lastBid: {
+      type: Number,
+      required: true
     }
-  },
-  data() {
-    return {
-      showDetails: false
-    };
   },
   methods: {
     shortenReference(reference) {
@@ -41,8 +40,8 @@ export default {
     getInitialPriceCHF(){
       return this.item.initialPrice + " CHF";
     },
-    getAtualPriceCHF(){
-      return this.item.lastBid + " CHF";
+    getActualPriceCHF(){
+      return this.lastBid + " CHF";
     }
   }
 };
@@ -66,15 +65,6 @@ export default {
   border: 3px solid #42b983;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.item-image {
-  width: 150px;
-  height: 150px;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-}
 .item-details {
   display: flex;
   flex-direction: column;
@@ -86,15 +76,6 @@ export default {
 }
 .item-field strong {
   color: #333;
-}
-.item-description {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: baseline;
-}
-.item-description span {
-  margin-left: 4px;
 }
 .click-icon {
   position: absolute;

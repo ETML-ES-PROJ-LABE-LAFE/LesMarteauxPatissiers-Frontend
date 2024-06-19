@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import MyBidList from '../components/MyBidList.vue'; // Assurez-vous que le chemin est correct
-import CustomerService from '@/services/CustomerService.js'; // Importer le service
+import MyBidList from '../components/MyBidList.vue';
+import CustomerService from '@/services/CustomerService.js';
 
 export default {
   name: "MyBidLots",
@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       items: [],
-      customerId: null 
+      customerId: null,
     };
   },
   created() {
@@ -35,6 +35,7 @@ export default {
           const response = await CustomerService.getUserPurchases(this.customerId);
           console.log('Données reçues de l\'API:', response);
           this.items = response;
+          this.initializeLastBids();
         } else {
           console.error('Customer ID is not available');
         }
@@ -45,15 +46,13 @@ export default {
     checkCustomerConnection() {
       const customer = localStorage.getItem('customer');
       if (customer) {
-        console.log(customer + " MARCHE")
         const parsedCustomer = JSON.parse(customer);
         this.customerId = parsedCustomer.id;
-        console.log(parsedCustomer.id);
       } else {
         console.error('No customer found in localStorage');
       }
     }
-  },
+  }
 };
 </script>
 
