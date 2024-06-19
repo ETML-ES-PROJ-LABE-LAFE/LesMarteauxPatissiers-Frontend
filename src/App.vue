@@ -23,6 +23,7 @@
               <router-link to="/my-proposed-lots" class="dropdown-item">Mes lots proposés</router-link>
               <router-link to="/my-bid-lots" class="dropdown-item">Mes lots enchéris</router-link>
               <router-link to="/my-won-lots" class="dropdown-item">Mes lots remportés</router-link>
+              <router-link to="/my-sold-lots" class="dropdown-item">Mes lots vendus</router-link>
             </div>
           </div>
           <div class="customer-dropdown">

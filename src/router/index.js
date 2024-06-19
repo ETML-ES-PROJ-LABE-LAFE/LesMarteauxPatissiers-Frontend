@@ -49,6 +49,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "my-bid-lots" */ "../views/MyWonLotsView.vue"),
   },
+  {
+    path: "/my-sold-lots",
+    name: "my-sold-lots",
+    component: () =>
+      import(/* webpackChunkName: "my-bid-lots" */ "../views/MySoldLotsView.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -6,7 +6,7 @@
           <strong>Nom:</strong> {{ item.name }}
           <strong>Description:</strong> <span>{{ item.description }}</span>
           <strong>Prix initial:</strong> {{ getInitialPriceCHF }}
-          <strong>Prix d'achat:</strong> {{ getActualPriceCHF }}
+          <strong>Prix de vente:</strong> {{ getSoldPriceCHF }}
         </div>
       </div>
       <div class="click-icon">
@@ -17,7 +17,7 @@
   
   <script>
   export default {
-    name: 'WonLot',
+    name: 'SoldLot',
     props: {
       item: {
         type: Object,
@@ -40,7 +40,7 @@
       getInitialPriceCHF() {
         return this.item.initialPrice + " CHF";
       },
-      getActualPriceCHF() {
+      getSoldPriceCHF() {
         return this.lastBid + " CHF";
       }
     }

@@ -40,7 +40,6 @@ export default {
           const response = await CustomerService.getUserSales(this.customerId);
           console.log('Données reçues de l\'API:', response);
           this.items = response;
-          this.initializeLastBids();
         } else {
           console.error('Customer ID is not available');
         }
@@ -53,10 +52,12 @@ export default {
         const auction = await ItemService.getAuctionByItemId(itemId);
         if (auction && auction.active) {
           await AuctionsService.endAuction(auction.id);
-          // Réinitialiser lastBid pour l'item terminé
+          // Enregistrer le montant final dans finalBid
           const item = this.items.find(item => item.id === itemId);
           if (item) {
-            localStorage.setItem(`lastBid_${itemId}`, item.initialPrice);
+            const lastBid = Number(localStorage.getItem(`lastBid_${item.id}`)) || item.initialPrice;
+            localStorage.setItem(`finalBid_${item.id}`, lastBid);
+            Number(localStorage.setItem(`lastBid_${item.id}`, item.initialPrice));
           }
           this.fetchUserSales(); // Rafraîchir la liste après la fin de l'enchère
         } else {

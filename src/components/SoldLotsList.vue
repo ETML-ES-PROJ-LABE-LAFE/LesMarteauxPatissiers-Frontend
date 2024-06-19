@@ -5,7 +5,7 @@
       </div>
       <div v-else>
         <div class="items-list">
-          <WonLot 
+          <SoldLot 
             v-for="item in paginatedItems" 
             :key="item.id" 
             :item="item" 
@@ -23,12 +23,12 @@
   </template>
   
   <script>
-  import WonLot from './WonLot.vue';
+  import SoldLot from './SoldLot.vue';
   
   export default {
-    name: "WonLotsList",
+    name: "SoldLotsList",
     components: {
-      WonLot
+      SoldLot
     },
     props: {
       items: {
