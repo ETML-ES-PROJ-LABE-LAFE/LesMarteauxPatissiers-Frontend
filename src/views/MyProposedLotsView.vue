@@ -17,6 +17,7 @@ import MySalesList from '../components/MySalesList.vue';
 import CustomerService from '@/services/CustomerService.js';
 import ItemService from '@/services/ItemService.js';
 import AuctionsService from '@/services/AuctionsService.js';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: "MyProposedLots",
@@ -35,46 +36,48 @@ export default {
   },
   methods: {
     async fetchUserSales() {
+      const toast = useToast();
       try {
         if (this.customerId) {
           const response = await CustomerService.getUserSales(this.customerId);
           console.log('Données reçues de l\'API:', response);
           this.items = response;
         } else {
-          console.error('Customer ID is not available');
+          toast.error('Customer ID is not available');
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des ventes de l’utilisateur:', error);
+        toast.error('Aucune ventes de l’utilisateur: ' + error.message);
       }
     },
     async handleEndAuction(itemId) {
+      const toast = useToast();
       try {
         const auction = await ItemService.getAuctionByItemId(itemId);
         if (auction && auction.active) {
           await AuctionsService.endAuction(auction.id);
-          // Enregistrer le montant final dans finalBid
           const item = this.items.find(item => item.id === itemId);
           if (item) {
             const lastBid = Number(localStorage.getItem(`lastBid_${item.id}`)) || item.initialPrice;
             localStorage.setItem(`finalBid_${item.id}`, lastBid);
             Number(localStorage.setItem(`lastBid_${item.id}`, item.initialPrice));
           }
-          this.fetchUserSales(); // Rafraîchir la liste après la fin de l'enchère
+          this.fetchUserSales();
         } else {
-          console.error('L\'enchère n\'est pas active ou n\'existe pas');
+          toast.error('L\'enchère n\'est pas active ou n\'existe pas');
         }
         this.$router.go();
       } catch (error) {
-        console.error('Erreur lors de la fin de l\'enchère:', error);
+        toast.error('Erreur lors de la fin de l\'enchère: ' + error.message);
       }
     },
     checkCustomerConnection() {
+      const toast = useToast();
       const customer = localStorage.getItem('customer');
       if (customer) {
         const parsedCustomer = JSON.parse(customer);
         this.customerId = parsedCustomer.id;
       } else {
-        console.error('No customer found in localStorage');
+        toast.error('No customer found in localStorage');
       }
     }
   },

@@ -12,6 +12,7 @@
 <script>
 import MyBidList from '../components/MyBidList.vue';
 import CustomerService from '@/services/CustomerService.js';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: "MyBidLots",
@@ -30,27 +31,38 @@ export default {
   },
   methods: {
     async fetchUserSales() {
+      const toast = useToast();
       try {
         if (this.customerId) {
           const response = await CustomerService.getUserPurchases(this.customerId);
-          console.log('Données reçues de l\'API:', response);
           this.items = response;
           this.initializeLastBids();
         } else {
-          console.error('Customer ID is not available');
+          toast.error('Customer ID is not available');
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des enchères de l’utilisateur:', error);
+        toast.error('Aucune enchères de l’utilisateur: ' + error.message);
       }
     },
     checkCustomerConnection() {
+      const toast = useToast();
       const customer = localStorage.getItem('customer');
       if (customer) {
         const parsedCustomer = JSON.parse(customer);
         this.customerId = parsedCustomer.id;
       } else {
-        console.error('No customer found in localStorage');
+        toast.error('No customer found in localStorage');
       }
+    },
+    initializeLastBids() {
+      this.items.forEach(item => {
+        const lastBid = localStorage.getItem(`lastBid_${item.id}`);
+        if (lastBid) {
+          localStorage.setItem(`lastBid_${item.id}`, Number(lastBid));
+        } else {
+          localStorage.setItem(`lastBid_${item.id}`, item.initialPrice);
+        }
+      });
     }
   }
 };
