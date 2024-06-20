@@ -36,7 +36,6 @@ export default {
         if (this.customerId) {
           const response = await CustomerService.getUserPurchases(this.customerId);
           this.items = response;
-          this.initializeLastBids();
         } else {
           toast.error('Customer ID is not available');
         }
@@ -53,16 +52,6 @@ export default {
       } else {
         toast.error('No customer found in localStorage');
       }
-    },
-    initializeLastBids() {
-      this.items.forEach(item => {
-        const lastBid = localStorage.getItem(`lastBid_${item.id}`);
-        if (lastBid) {
-          localStorage.setItem(`lastBid_${item.id}`, Number(lastBid));
-        } else {
-          localStorage.setItem(`lastBid_${item.id}`, item.initialPrice);
-        }
-      });
     }
   }
 };
